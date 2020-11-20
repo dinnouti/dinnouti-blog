@@ -1,0 +1,41 @@
+<footer class='border-t my-6 pt-6 '>
+	<div class="container mx-auto">
+		<div class="grid grid-cols-3 gap-4">
+			<div>
+				{{ with .Site.Menus.main }}
+				<h3>Navigation</h3>
+				{{ range . }}
+				<div>
+					<a href="{{ .URL | relURL }}">{{ .Name }}</a>
+				</div>
+				{{ end }}
+				{{ end }}
+			</div>
+
+			<div>&nbsp</div>
+
+			<div>
+				<h3>Social</h3>
+				<a href="https://twitter.com/dinnouti" target="_blank">
+					<svg class='svg-footer' data-icon="twitter" viewBox="0 0 32 32" style="fill:currentcolor">
+						<title>twitter icon</title>
+						<path
+							d="M2 4 C6 8 10 12 15 11 A6 6 0 0 1 22 4 A6 6 0 0 1 26 6 A8 8 0 0 0 31 4 A8 8 0 0 1 28 8 A8 8 0 0 0 32 7 A8 8 0 0 1 28 11 A18 18 0 0 1 10 30 A18 18 0 0 1 0 27 A12 12 0 0 0 8 24 A8 8 0 0 1 3 20 A8 8 0 0 0 6 19.5 A8 8 0 0 1 0 12 A8 8 0 0 0 3 13 A8 8 0 0 1 2 4">
+						</path>
+					</svg>
+				</a>
+
+				<a href="https://linkedin.com/in/dinnouti" target="_blank">
+					<svg class='svg-footer' data-icon="linkedin" viewBox="0 0 24 24" style="fill:currentcolor">
+						<title>linkedin icon</title>
+						<path
+							d="M0 0v24h24v-24h-24zm8 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.397-2.586 7-2.777 7 2.476v6.759z">
+						</path>
+					</svg>
+				</a>
+			</div>
+		</div>
+
+		<div class='text-right text-xs mt-6'>&copy; {{ now.Year }} <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></div>
+	</div>
+</footer>

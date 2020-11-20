@@ -1,0 +1,18 @@
+<header class="py-6 px-6 border-b mb-3 text-xl" style="line-height: 1.6">
+	<span>./ </span>
+
+	<!-- title main page -->
+	{{ if eq .Site.Title .Title }}
+	<span class="font-bold text-gray-800">{{ .Site.Title }}</span>
+	{{ end }}
+
+	<!-- title with subpage -->
+	{{ if ne .Site.Title .Title }}
+	<a class="font-bold border-b-2 pb-1 border-black no-underline" href="{{ .Site.BaseURL  }}">{{ .Site.Title }}</a>
+
+	<span class=''> / </span>
+	<span class='text-gray-800 font-bold'>
+		{{ .Title }}
+	</span>
+	{{ end }}
+</header>

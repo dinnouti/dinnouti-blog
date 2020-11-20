@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    h1 {
+        @apply text-xl font-bold no-underline;
+    }
+
+    h2 {
+        @apply text-xl no-underline my-3;
+    }
+
+    h3 {
+        @apply font-bold no-underline my-3;
+    }
+
+    time{
+        @apply text-xs pr-2 no-underline;
+    }
+
+    .tag {
+        @apply ml-1 bg-gray-300 hover:bg-gray-200 rounded-md px-2 py-1 items-center text-xs lowercase no-underline;
+    }
+}
+
+a {
+    @apply transition duration-100 hover:text-gray-500 underline;
+}
+
+.highlight {
+    @apply bg-gray-50 p-3 my-3 mr-6 text-sm border border-gray-100 rounded;
+    overflow-x: auto;
+}
+
+.svg-footer {
+    width: 2rem;
+    height: 2rem;
+    display: inline;
+    margin-right: 6px;
+}

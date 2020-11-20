@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en-us" }}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>{{ .Title }}</title>
+
+	{{ with .Site.Params.description }}
+	<meta name="description" content="{{ . }}">
+	{{ end }}
+
+	{{ with .Site.Params.author }}
+	<meta name="author" content="{{ . }}">
+	{{ end }}
+
+	<!-- tailwind css -->
+	{{ $styles := resources.Get "css/main.css" }}
+    {{ $styles = $styles | resources.PostCSS (dict "inlineImports" true) }}
+
+    {{ if hugo.IsProduction }}
+      {{ $styles = $styles | minify }}
+    {{ end }}
+
+	<link href="{{ $styles.Permalink }}" rel="stylesheet" />
+
+	<!-- code pygment css -->
+	{{ $styles := resources.Get "css/syntax-github.css" }}
+	<link rel="stylesheet" href="{{ $styles.Permalink }}">
+
+	{{ with .OutputFormats.Get "RSS" -}}
+	{{ printf `<link rel="%s" type="%s" href="%s" title="%s">` .Rel .MediaType.Type .RelPermalink $.Site.Title | safeHTML }}
+	{{- end }}
+</head>
+
+<body class="font-sans text-base text-gray-800">
+	{{ partial "header" . }}
+	<div class='container mx-auto px-6'>
+		<div class='grid grid-cols-none md:grid-cols-4 md:gap-4 '>
+			<div class='col-span-3'>
+				{{ block "main" . }}{{ end }}
+			</div>
+			<div class='col-span-1 hidden md:flex'>
+				{{ partial "sidebar.html" . }}
+			</div>
+		</div>
+	</div>
+
+	<div class=''>
+		{{ partial "footer" . }}
+	</div>
+</body>
+
+</html>

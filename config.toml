@@ -1,0 +1,10 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "Alex Tech Blog"
+pygmentsUseClasses=true
+
+[menu]
+
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
