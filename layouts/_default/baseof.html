@@ -29,9 +29,13 @@
 	{{ $styles := resources.Get "css/syntax-github.css" }}
 	<link rel="stylesheet" href="{{ $styles.Permalink }}">
 
+	<!-- rss -->
 	{{ with .OutputFormats.Get "RSS" -}}
 	{{ printf `<link rel="%s" type="%s" href="%s" title="%s">` .Rel .MediaType.Type .RelPermalink $.Site.Title | safeHTML }}
 	{{- end }}
+
+	<!-- google analytics -->
+	{{ template "_internal/google_analytics_async.html" . }}
 </head>
 
 <body class="font-sans text-base text-gray-800">
