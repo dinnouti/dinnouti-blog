@@ -1,4 +1,4 @@
-baseURL = "http://example.org/"
+baseURL = "https://alex.dinnouti.com/"
 languageCode = "en-us"
 title = "Alex Tech Blog"
 pygmentsUseClasses=true
