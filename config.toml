@@ -3,7 +3,6 @@ languageCode = "en-us"
 title = "Alex Tech Blog"
 pygmentsUseClasses=true
 googleAnalytics = "UA-924299-15"
-disqusShortname = "alex-tech-blog"
 
 [menu]
 
