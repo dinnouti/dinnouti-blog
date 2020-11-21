@@ -14,8 +14,8 @@
 			{{ .Content }}
 		</div>
 
-		{{ with .Site.DisqusShortname }}
-		<div>
+		{{ if .Site.DisqusShortname }}
+		<div class='mt-12'>
 			{{ template "_internal/disqus.html" . }}
 		</div>
 		{{ end }}
