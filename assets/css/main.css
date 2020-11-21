@@ -30,6 +30,7 @@
     li {
         @apply pb-2;
         text-indent: -1em;
+        padding-left: 1em;
     }
 
     p {
