@@ -8,6 +8,7 @@ comments: false
 
 [Amazon Web Services Labs](https://github.com/awslabs) has several experiments to help with day by day AWS management and development. Some of my favorites:
 
+
 * [awslabs/aws-lambda-powertools-python](https://github.com/awslabs/aws-lambda-powertools-python) - A suite of utilities for AWS Lambda Functions that makes tracing with AWS X-Ray, structured logging and creating custom metrics asynchronously easier
 * [awslabs/awscli-aliases](https://github.com/awslabs/awscli-aliases) - AWS CLI aliases
 * [awslabs/git-secrets](https://github.com/awslabs/git-secrets) - Prevents you from committing secrets and credentials into git repositories
