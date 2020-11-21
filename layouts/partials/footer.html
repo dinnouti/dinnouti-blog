@@ -3,13 +3,14 @@
 		<div class="grid grid-cols-3 gap-4">
 			<div>
 				{{ with .Site.Menus.main }}
-				<h3>Navigation</h3>
 				{{ range . }}
 				<div>
 					<a href="{{ .URL | relURL }}">{{ .Name }}</a>
 				</div>
 				{{ end }}
 				{{ end }}
+				<div class='text-xs mt-6'>&copy; {{ now.Year }} <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></div>
+
 			</div>
 
 			<div>&nbsp</div>
@@ -43,6 +44,6 @@
 			</div>
 		</div>
 
-		<div class='text-right text-xs mt-6'>&copy; {{ now.Year }} <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></div>
+
 	</div>
 </footer>

@@ -6,7 +6,7 @@ tags: ["aws", "codecommit"]
 comments: false
 ---
 
-Making sure the AWS ClI is proper installed in the computer
+Making sure the AWS CLI is proper installed in the computer
 
 {{< highlight bash >}}
 $ aws sts get-caller-identity
