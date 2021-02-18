@@ -45,7 +45,7 @@ Add your CodeCommit repository as a remote
 $ git remote add origin codecommit://<repository name>
 {{< / highlight >}}
 
-After all is setup you can run the common Git commands like Push the code to your new CodeCommit repository
+After all the configuration is done you can run the common Git commands like Push the code to your new CodeCommit repository
 {{< highlight bash >}}
 $ git push -u origin master
 {{< / highlight >}}
