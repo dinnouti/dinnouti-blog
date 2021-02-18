@@ -16,5 +16,5 @@ node_modules/
 resources/_gen/
 deploy.sh
 new-blog-post.sh
-content/.obsidian/config
-content/.obsidian/workspace
+content/.obsidian/
+.vscode/
