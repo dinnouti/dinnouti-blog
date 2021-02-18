@@ -18,3 +18,4 @@ deploy.sh
 new-blog-post.sh
 content/.obsidian/
 .vscode/
+.vscode/ltex.dictionary.en-US.txt
