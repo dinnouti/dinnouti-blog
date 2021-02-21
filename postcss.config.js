@@ -2,7 +2,7 @@
 //     plugins: [require("tailwindcss"), require("autoprefixer")],
 //   };
 
-const themeDir = __dirname + '/../../';
+const themeDir = __dirname ;
 
 const purgecss = require('@fullhuman/postcss-purgecss')({
     // see https://gohugo.io/hugo-pipes/postprocess/#css-purging-with-postcss
@@ -18,7 +18,7 @@ module.exports = {
         require('postcss-import')({
             path: [themeDir]
             }),
-        require('tailwindcss')(themeDir + 'assets/css/tailwind.config.js'),
+        require('tailwindcss')(themeDir + '/tailwind.config.js'),
         require('autoprefixer')({
             path: [themeDir],
             grid: true
