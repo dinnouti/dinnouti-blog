@@ -42,7 +42,7 @@ a {
     @apply transition duration-100 hover:text-gray-500 underline;
 }
 
-.highlight {
+code, .highlight {
     @apply bg-gray-50 p-3 mb-3 mr-6 text-sm border border-gray-100 rounded;
     overflow-x: auto;
 }
