@@ -16,14 +16,12 @@
 	{{ end }}
 
 	<!-- tailwind css -->
-	{{ $styles := resources.Get "css/main.css" }}
-	{{ $styles = $styles | resources.PostCSS (dict "inlineImports" true) }}
-
+	{{ $css := resources.Get "css/main.css" }}
+	{{ $css = $css | resources.PostCSS }}
 	{{ if hugo.IsProduction }}
-	{{ $styles = $styles | minify }}
+		{{ $css = $css | minify | fingerprint | resources.PostProcess }}
 	{{ end }}
-
-	<link href="{{ $styles.Permalink }}" rel="stylesheet" />
+	<link href="{{ $css.RelPermalink }}" rel="stylesheet" />
 
 	<!-- code pygment css -->
 	{{ $styles := resources.Get "css/syntax-github.css" }}
