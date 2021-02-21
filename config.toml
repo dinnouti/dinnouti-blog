@@ -4,6 +4,9 @@ title = "Alex Tech Blog"
 pygmentsUseClasses=true
 googleAnalytics = "UA-924299-15"
 
+[build]
+  writeStats = true
+
 [menu]
 
   [[menu.main]]
