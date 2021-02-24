@@ -19,3 +19,4 @@ new-blog-post.sh
 content/.obsidian/
 .vscode/
 .vscode/ltex.dictionary.en-US.txt
+hugo_stats.json
