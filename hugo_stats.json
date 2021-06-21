@@ -16,6 +16,7 @@
       "head",
       "header",
       "html",
+      "img",
       "li",
       "link",
       "main",
@@ -104,11 +105,14 @@
     ],
     "ids": [
       "fb-root",
+      "mixing-pyenv-with-venv-and-pipenv-winner",
       "pipenv",
+      "pipenv-a-new-option",
       "pyenv",
       "references",
       "resources",
       "setting-up-your-codecommit-repository",
+      "venv-option",
       "what-is-the-aws-amplify-console"
     ]
   }
