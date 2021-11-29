@@ -10,7 +10,7 @@
 		</time>
 
 		{{ range .Params.tags }}
-		<a class='no-underline' href="{{ " /tags/" | relLangURL }}{{ . | urlize }}">
+		<a class='no-underline' href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">
 			#{{lower . }}
 		</a>
 		{{ end }}
