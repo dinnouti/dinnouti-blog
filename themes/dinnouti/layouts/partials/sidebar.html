@@ -1,0 +1,17 @@
+<div class='sidebar-title'>Tag Cloud</div>
+
+{{ range .Site.Taxonomies.tags }}
+<a class='no-underline sidebar-tag' href="{{ .Page.Permalink }}">
+    #{{- lower  .Page.Title -}}
+</a>
+{{ end }}
+
+
+<div class='sidebar-title'>Latest posts</div>
+
+{{ range first 20 (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
+<div class='sidebar-item'>
+    &bull;&nbsp;<a class='no-underline' href="{{ .RelPermalink }}"> {{- .Title -}} </a>
+</div>
+{{ end }}
+

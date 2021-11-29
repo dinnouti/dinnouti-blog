@@ -1,0 +1,13 @@
+<div class='blog-title'>
+    <a href="/" class='no-underline'>
+        <span class="opacity">>./</span>
+        {{ .Site.Title }}
+    </a>
+    {{ if ne .Site.Title .Title }}
+    <span class="opacity">/</span>
+    {{ .Title }}
+    {{ end }}
+    <span class='opacity'>&crarr;</span>
+</div>
+
+<hr>

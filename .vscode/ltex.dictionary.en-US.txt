@@ -1,4 +1,0 @@
-pyenv
-Pipenv
-pipenv
-Honeycode

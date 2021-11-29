@@ -1,0 +1,13 @@
+{{ define "main" }}
+<!-- list.html -->
+<main>
+	<div>
+		{{ with .Title }}<h1>{{ . }}</h1>{{ end }}
+	</div>
+
+	{{ range .Paginator.Pages }}
+    {{ .Render "summary" }}
+	{{ end }}
+</main>
+
+{{ end }}

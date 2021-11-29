@@ -1,14 +1,14 @@
 baseURL = "https://alex.dinnouti.com/"
-languageCode = "en-us"
-title = "Alex Tech Blog"
+languageCode = 'en-us'
+title = 'Alex Tech Blog'
+theme = "dinnouti"
 pygmentsUseClasses=true
 googleAnalytics = "UA-924299-15"
 
-[build]
-  writeStats = true
+[author]
+name = "Alex Dinnouti"
 
-[menu]
-
-  [[menu.main]]
-    name = "About"
-    url = "/about/"
+[sitemap]
+  changefreq = 'monthly'
+  filename = 'sitemap.xml'
+  priority = 0.5

@@ -1,0 +1,22 @@
+{{ define "main" }}
+<main>
+	<article>
+		<h1>{{ .Title }}</h1>
+
+		<div class='summary-tags'>
+			<time>
+				{{.Date.Format "2006-01-02"}}
+			</time>
+	
+			{{ range .Params.tags }}
+			<a class='no-underline' href="{{ " /tags/" | relLangURL }}{{ . | urlize }}">
+				#{{lower . }}
+			</a>
+			{{ end }}
+		</div>
+
+        {{ .Content }}
+
+	</article>
+</main>
+{{ end }}
