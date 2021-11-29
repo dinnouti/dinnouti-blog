@@ -7,9 +7,9 @@
 			<time>
 				{{.Date.Format "2006-01-02"}}
 			</time>
-	
+
 			{{ range .Params.tags }}
-			<a class='no-underline' href="{{ " /tags/" | relLangURL }}{{ . | urlize }}">
+			<a class='no-underline' href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">
 				#{{lower . }}
 			</a>
 			{{ end }}

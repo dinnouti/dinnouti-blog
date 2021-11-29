@@ -6,7 +6,6 @@ tags: ["Python", "Jupyter", "Machine Learning"]
 comments: true
 ---
 
-Adding progressbar to a Jupyter Lab Notebook:
 
 {{< highlight bash >}}
 pip3 install tqdm --user

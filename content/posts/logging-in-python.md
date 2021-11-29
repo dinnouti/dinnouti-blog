@@ -6,7 +6,7 @@ tags: ["Python"]
 comments: true
 ---
 
-Snipped in how to logging in Python
+Snippet how to log data in Python
 
 {{< highlight python >}}
 import logging

@@ -1,9 +1,8 @@
 {{ define "main" }}
 <!-- list.html -->
 <main>
-	<div>
-		{{ with .Title }}<h1>{{ . }}</h1>{{ end }}
-	</div>
+	<h1>{{ .Title }}</h1>
+	<div style='padding-bottom:3px;'>&nbsp;</div>
 
 	{{ range .Paginator.Pages }}
     {{ .Render "summary" }}

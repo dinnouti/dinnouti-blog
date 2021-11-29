@@ -12,3 +12,17 @@ name = "Alex Dinnouti"
   changefreq = 'monthly'
   filename = 'sitemap.xml'
   priority = 0.5
+
+[markup]
+  [markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ''
+    lineAnchors = ''
+    lineNoStart = 1
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = true
+    style = 'github'
+    tabWidth = 4
