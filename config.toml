@@ -3,7 +3,6 @@ languageCode = 'en-us'
 title = 'Alex Tech Blog'
 theme = "dinnouti"
 pygmentsUseClasses=true
-googleAnalytics = "UA-924299-15"
 
 [author]
 name = "Alex Dinnouti"
