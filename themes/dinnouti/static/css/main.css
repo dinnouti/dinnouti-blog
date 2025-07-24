@@ -10,11 +10,12 @@ h1 {
 }
 
 .blog-title {
-  font-family: "Source Code Pro", monospace;
+  font-size: 14px;
+  font-family: "Fira Code", "Source Code Pro", monospace;
 }
 
 .font-monospace {
-  font-family: "Source Code Pro", monospace;
+  font-family: "Fira Code", "Source Code Pro", monospace;
 }
 
 .no-underline {
@@ -22,7 +23,11 @@ h1 {
 }
 
 .opacity {
-  opacity: 0.5;
+  opacity: 0.3;
+}
+
+.blog-title-special-chars {
+  opacity: 0.3;
 }
 
 hr {
@@ -41,17 +46,39 @@ a {
 
 a:hover {
   color: inherit;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .summary-tags {
   font-size: small;
-  font-family: "Source Code Pro", monospace;
+  font-family: "Fira Code", "Source Code Pro", monospace;
   text-decoration: none;
   padding: 0px 2px;
   text-align: center;
   display: inline-block;
   color: #444444;
+}
+
+/* code highlight */
+.chroma {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+code {
+  font-family: "Fira Code", "Source Code Pro", monospace;
+  font-size: small;
+}
+
+/* blink */
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }
 
 /* flexbox */
@@ -70,21 +97,6 @@ a:hover {
   width: 300px;
 }
 
-/* code highligh */
-.highlight {
-  width: 90%;
-}
-
-.chroma {
-  padding: 10px;
-  background-color: #eeeeee;
-  border-radius: 3px;
-}
-
-code {
-  font-family: "Source Code Pro", monospace;
-  font-size: small;
-}
 
 /* sidebar */
 

@@ -1,11 +1,12 @@
 baseURL = "https://alex.dinnouti.com/"
 languageCode = 'en-us'
-title = 'Alex Tech Blog'
+title = 'Alex_Tech_Blog'
 theme = "dinnouti"
 pygmentsUseClasses=true
 
-[author]
-name = "Alex Dinnouti"
+[params]
+  [params.author]
+    name = "Alex Dinnouti"
 
 [sitemap]
   changefreq = 'monthly'
@@ -14,14 +15,5 @@ name = "Alex Dinnouti"
 
 [markup]
   [markup.highlight]
-    anchorLineNos = false
-    codeFences = true
-    guessSyntax = false
-    hl_Lines = ''
-    lineAnchors = ''
-    lineNoStart = 1
-    lineNos = true
-    lineNumbersInTable = true
-    noClasses = true
-    style = 'github'
+    noClasses=false
     tabWidth = 4

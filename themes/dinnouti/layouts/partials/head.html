@@ -1,6 +1,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {{ hugo.Generator }}
+
   <title>
     {{ if ne .Site.Title .Title }} {{ .Title }} &mdash; {{ end }} {{ .Site.Title
     }}
@@ -38,22 +40,26 @@
         "keywords" : [ {{ if isset .Params "tags" }}{{ range .Params.tags }}"{{ . }}",{{ end }}{{ end }}"Blog" ]
     }
   </script>
+  
   <!-- Open Grapth -->
   {{ template "_internal/opengraph.html" . }}
+
   <!-- Twitter -->
   {{ template "_internal/twitter_cards.html" . }}
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&family=Source+Sans+Pro&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&family=Source+Sans+Pro&family=Fira+Code&display=swap"
     rel="stylesheet"
   />
-
-  <link rel="stylesheet" href="/css/syntax-github.css" />
+  
+  <link rel="stylesheet" href="/css/catppuccin-macchiato.css">
   <link rel="stylesheet" href="/css/main.css" />
+  
 
   <!-- mixpanel.com -->
   {{ partial "mixpanel.html" . }}
+  
 
 </head>

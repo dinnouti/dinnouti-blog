@@ -1,13 +1,7 @@
+
 <div class='blog-title'>
-    <a href="/" class='no-underline'>
-        <span class="opacity">>./</span>
-        {{ .Site.Title }}
-    </a>
-    {{ if ne .Site.Title .Title }}
-    <span class="opacity">/</span>
-    {{ .Title }}
-    {{ end }}
-    <span class='opacity'>&crarr;</span>
+    <span class="blog-title-special-chars">dinnouti@</span><a href="/" class='no-underline'>{{ .Site.Title }}</a><span class="blog-title-special-chars"> ~/</span>{{if ne .Site.Title .Title}}{{ replace .Title " " "_"}}{{ end }}<span class='blog-title-special-chars'>&gt;&nbsp;<span class='blink'>&#x258C;</span> 
 </div>
 
 <hr>
+
