@@ -1,6 +1,12 @@
 
 <div class='blog-title'>
-    <span class="blog-title-special-chars">dinnouti@</span><a href="/" class='no-underline'>{{ .Site.Title }}</a><span class="blog-title-special-chars"> ~/</span>{{if ne .Site.Title .Title}}{{ replace .Title " " "_"}}{{ end }}<span class='blog-title-special-chars'>&gt;&nbsp;<span class='blink'>&#x258C;</span> 
+    <span class="blog-title-special-chars">dinnouti@</span>
+    <a href="/" class='no-underline'>
+        {{ .Site.Title }}
+        <span class="blog-title-special-chars">~/</span>
+    </a>
+    {{if ne .Site.Title .Title}}{{ replace .Title " " "_"}}{{ end }}
+    <span class='blog-title-special-chars'>&gt;&nbsp;<span class='blink'>&#x258C;</span> 
 </div>
 
 <hr>
