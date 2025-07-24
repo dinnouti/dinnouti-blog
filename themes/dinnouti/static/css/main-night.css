@@ -1,0 +1,159 @@
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #CCCCCC;
+  background-color: #1f1f1f;
+  margin: 0px;
+}
+
+h1 {
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-size: 24px;
+}
+
+
+.font-monospace {
+  font-family: "Fira Code", "Source Code Pro", monospace;
+}
+
+.no-underline {
+  text-decoration: none;
+}
+
+.opacity {
+  opacity: 0.3;
+}
+
+hr {
+  border-color: #e5e7eb;
+  border-style: solid;
+}
+
+figure {
+  text-align: center;
+  font-family: "Source Code Pro", monospace;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: #6a9955;
+}
+
+.summary-tags {
+  font-size: small;
+  font-family: "Fira Code", "Source Code Pro", monospace;
+  text-decoration: none;
+  padding: 0px 2px;
+  text-align: center;
+  display: inline-block;
+  color: #DCDCDC80;
+}
+
+/* blog title */
+.blog-title {
+  background-color: #181818;
+  padding: 20px 0px 20px 10px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-family: "Fira Code", "Source Code Pro", monospace;
+  border-bottom: 2px solid #cccccc20;
+}
+
+.blog-title-special-user {
+  color: lightgreen;
+}
+
+.blog-title-special-host {
+  color: yellow;
+}
+
+.blog-title-special-path {
+  color: green;
+}
+
+/* code highlight */
+.chroma {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+code {
+  font-family: "Fira Code", "Source Code Pro", monospace;
+  font-size: small;
+}
+
+/* blink */
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* flexbox */
+.flex-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 25px;
+}
+
+.flex-main {
+  width: 800px;
+}
+
+.flex-sidebar {
+  width: 300px;
+}
+
+
+/* sidebar */
+
+.sidebar-title {
+  font-weight: bolder;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.sidebar-item {
+  padding-bottom: 5px;
+  font-size: small;
+}
+
+.sidebar-tag {
+  padding-right: 7px;
+  font-size: small;
+  white-space: nowrap;
+}
+
+/* footer */
+footer {
+  text-align: right;
+}
+
+.foot-wrapper {
+  margin-top: 25px;
+  margin-bottom: 50px;
+}
+
+.footer-social-icons {
+  width: 20px;
+  height: 20px;
+  padding-right: 15px;
+}
+
+@media only screen and (max-width: 900px) {
+  .flex-main {
+    flex: 100%;
+  }
+
+  .flex-sidebar {
+    display: none;
+  }
+}
