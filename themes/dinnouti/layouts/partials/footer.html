@@ -24,8 +24,8 @@
     <div class="foot-wrapper">
         <div class="flex-footer-container">
             <div class='flex-footer-about'>
-                &mdash; <a href="/">Home</a><br/>
-                &mdash; <a href="/about">About</a> <br/>
+                &mdash; <a href="{{ .Site.Home.RelPermalink }}">Home</a><br/>
+                &mdash; <a href="{{ (.Site.GetPage "/about").RelPermalink }}">About</a> <br/>
             </div>
             <div class='flex-footer-social-icons'>
                 <!-- linkedin -->

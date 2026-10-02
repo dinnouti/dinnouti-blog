@@ -1,6 +1,6 @@
 
 <div class='blog-title'>
-    <span class="blog-title-special-user">dinnouti</span>@<a href="/" class='no-underline blog-title-special-host'>{{ .Site.Title }}
+    <span class="blog-title-special-user">dinnouti</span>@<a href="{{ .Site.Home.RelPermalink }}" class='no-underline blog-title-special-host'>{{ .Site.Title }}
     <span class="blog-title-special-path">~</span></a><span class="blog-title-special-path">/{{if ne .Site.Title .Title}}{{ replace .Title " " "_"}}{{ end }}</span>
     <span class='blog-title-special-chars'>(master)&gt;&nbsp;</span>
     <span class='blink'>&#x258C;</span> 
