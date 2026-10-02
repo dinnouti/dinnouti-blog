@@ -5,6 +5,13 @@ draft: false
 comments: false
 ---
 
-Powered by [Hugo](https://gohugo.io/). Hosted at Amazon Web Services using [AWS Amplify Console](https://aws.amazon.com/amplify/) provides a Git-based workflow for hosting fullstack serverless web apps and static websites with continuous deployment.
+Powered by [Hugo](https://gohugo.io/). Hosted on AWS using a simple S3 bucket + CloudFront distribution for static site delivery.
 
-Theme based on [siegerts/hugo-theme-basic](https://github.com/siegerts/hugo-theme-basic).
+## Design
+
+The current look is a from-scratch 80s green-phosphor CRT terminal theme — scanlines, glow, the works — built with [Hermes Agent](https://github.com/NousResearch/hermes-agent), an AI agent by Nous Research. Original theme layout based on [siegerts/hugo-theme-basic](https://github.com/siegerts/hugo-theme-basic).
+
+## Credits
+
+- **Alex Dinnouti** — author, everything you're reading
+- **Hermes Agent** (Nous Research) — redesign, theme, and site tooling
