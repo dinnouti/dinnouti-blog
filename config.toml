@@ -6,16 +6,32 @@ pygmentsUseClasses=true
 enableRobotsTXT = true
 
 [outputs]
-  home = ["HTML", "RSS", "llms"]
+  home = ["HTML", "RSS", "llms", "llmsfull"]
+  page = ["HTML", "RSS", "md"]
+  section = ["HTML", "RSS", "md"]
+  taxonomy = ["HTML", "RSS", "md"]
+  term = ["HTML", "RSS", "md"]
 
 [mediaTypes]
   [mediaTypes."text/plain"]
     suffixes = ["txt"]
+  [mediaTypes."text/markdown"]
+    suffixes = ["md"]
 
 [outputFormats]
   [outputFormats.llms]
     mediaType = "text/plain"
     baseName = "llms"
+    isPlainText = true
+    notAlternative = true
+  [outputFormats.llmsfull]
+    mediaType = "text/plain"
+    baseName = "llms-full"
+    isPlainText = true
+    notAlternative = true
+  [outputFormats.md]
+    mediaType = "text/markdown"
+    baseName = "index"
     isPlainText = true
     notAlternative = true
 

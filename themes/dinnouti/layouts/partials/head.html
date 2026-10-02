@@ -25,6 +25,12 @@
   <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Site.Title }}" />
   {{ end }}
 
+  <!-- Plain-markdown alternate of this page, for agents that prefer
+       content without HTML/CSS/JS (see https://llmstxt.org/) -->
+  {{ with .OutputFormats.Get "md" }}
+  <link rel="alternate" type="text/markdown" href="{{ .Permalink }}" />
+  {{ end }}
+
   <!-- Structured data: BlogPosting for actual posts, WebSite for everything else
        (list/tag/home pages aren't articles, so they shouldn't claim to be) -->
   {{ if and .IsPage (eq .Type "posts") }}

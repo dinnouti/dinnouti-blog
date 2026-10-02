@@ -1,0 +1,19 @@
+# {{ .Site.Title }}
+
+> {{ .Site.Params.author.name }}'s personal technical blog. Full-text dump of every post for single-request LLM ingestion. For a lightweight index instead, see [llms.txt]({{ "llms.txt" | absURL }}).
+
+{{ range (where .Site.RegularPages "Type" "in" .Site.Params.mainSections).ByDate.Reverse }}
+--------------------------------------------------------------------------------
+title: {{ .Title }}
+url: {{ .Permalink }}
+date: {{ .Date.Format "2006-01-02" }}
+{{- if .Params.description }}
+description: {{ .Params.description }}
+{{- end }}
+{{- if .Params.tags }}
+tags: {{ delimit .Params.tags ", " }}
+{{- end }}
+--------------------------------------------------------------------------------
+{{ .RawContent }}
+
+{{ end }}

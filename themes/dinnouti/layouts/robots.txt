@@ -27,4 +27,5 @@ Allow: /
 Sitemap: {{ "sitemap.xml" | absURL }}
 
 # Agent-readable site index (https://llmstxt.org/)
-# See: {{ "llms.txt" | absURL }}
+# Lightweight index: {{ "llms.txt" | absURL }}
+# Full-text dump:    {{ "llms-full.txt" | absURL }}

@@ -2,7 +2,7 @@
 
 > {{ .Site.Params.author.name }}'s personal technical blog. Posts on AWS, Python, infrastructure, and other engineering topics. Static site built with Hugo.
 
-This file follows the [llms.txt](https://llmstxt.org/) convention: a plain-text index for AI agents and LLMs, so they can read site structure without parsing HTML/CSS.
+This file follows the [llms.txt](https://llmstxt.org/) convention: a concise, markdown index for AI agents and LLMs, so they can read site structure without parsing HTML/CSS/JS. Each entry links to a plain markdown (.md) version of the page. For a single-request full-text dump of every post, see [llms-full.txt]({{ "llms-full.txt" | absURL }}).
 
 ## About
 
@@ -10,16 +10,17 @@ This file follows the [llms.txt](https://llmstxt.org/) convention: a plain-text 
 - Base URL: {{ .Site.BaseURL }}
 - RSS feed: {{ with .OutputFormats.Get "rss" }}{{ .Permalink }}{{ end }}
 - Sitemap: {{ "sitemap.xml" | absURL }}
+- Full-text dump: {{ "llms-full.txt" | absURL }}
 - License: all post content is the author's own work unless a post states otherwise. Attribute and link back if you quote or summarize it.
 
 ## Posts
 
 {{ range (where .Site.RegularPages "Type" "in" .Site.Params.mainSections).ByDate.Reverse }}
-- [{{ .Title }}]({{ .Permalink }}){{ if .Params.description }}: {{ .Params.description }}{{ end }} ({{ .Date.Format "2006-01-02" }}){{ if .Params.tags }} [{{ delimit .Params.tags ", " }}]{{ end }}
+- [{{ .Title }}]({{ .Permalink }}index.md){{ if .Params.description }}: {{ .Params.description }}{{ end }} ({{ .Date.Format "2006-01-02" }}){{ if .Params.tags }} [{{ delimit .Params.tags ", " }}]{{ end }}
 {{- end }}
 
 ## Pages
 
 {{ range .Site.Pages }}{{ if and (eq .Kind "page") (ne .Type "posts") }}
-- [{{ .Title }}]({{ .Permalink }})
+- [{{ .Title }}]({{ .Permalink }}index.md)
 {{- end }}{{ end }}
