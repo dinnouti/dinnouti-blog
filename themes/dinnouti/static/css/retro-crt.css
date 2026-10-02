@@ -1,0 +1,419 @@
+/* ======================================================================
+   Retro Terminal (80s Phosphor CRT) — written from scratch
+   Theme: green phosphor on black, scanlines, glow, flicker.
+   ====================================================================== */
+
+:root {
+  --phosphor: #33ff33;
+  --phosphor-bright: #7dff7d;
+  --phosphor-dim: #1b8f1b;
+  --crt-bg: #061006;
+  --crt-bg-panel: #0a1a0a;
+  --crt-border: #1f5c1f;
+  --crt-shadow: 0 0 2px rgba(51, 255, 51, 0.8), 0 0 6px rgba(51, 255, 51, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--crt-bg);
+}
+
+body {
+  color: var(--phosphor);
+  font-family: "VT323", "Share Tech Mono", "Courier New", monospace;
+  font-size: 19px;
+  line-height: 1.5;
+  text-shadow: var(--crt-shadow);
+  position: relative;
+  min-height: 100vh;
+}
+
+/* CRT scanline + vignette overlay, fixed over the whole viewport */
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 1px,
+    rgba(0, 0, 0, 0.25) 2px,
+    rgba(0, 0, 0, 0.25) 3px
+  );
+  mix-blend-mode: multiply;
+}
+
+body::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9998;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* subtle brightness flicker, cheap and not seizure-inducing */
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  48% { opacity: 1; }
+  50% { opacity: 0.96; }
+  52% { opacity: 1; }
+}
+
+body {
+  animation: crt-flicker 6s infinite;
+}
+
+a {
+  color: var(--phosphor-bright);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #ffffff;
+  text-decoration: underline;
+  outline: none;
+}
+
+a.no-underline {
+  text-decoration: none;
+}
+
+hr {
+  border: none;
+  border-top: 1px dashed var(--crt-border);
+  margin: 20px 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--phosphor-bright);
+  font-weight: normal;
+  letter-spacing: 0.5px;
+  margin-top: 1.4em;
+  margin-bottom: 0.6em;
+}
+
+h1 { font-size: 1.8em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.25em; }
+
+p {
+  margin: 0 0 1em 0;
+}
+
+ul, ol {
+  padding-left: 1.4em;
+}
+
+blockquote {
+  border-left: 3px solid var(--crt-border);
+  margin: 1em 0;
+  padding: 0.2em 1em;
+  color: var(--phosphor-dim);
+}
+
+/* ---------------- layout ---------------- */
+
+.flex-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.flex-main {
+  width: 100%;
+  max-width: 760px;
+  min-width: 0;
+}
+
+.flex-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  border-left: 1px dashed var(--crt-border);
+  padding-left: 20px;
+}
+
+main {
+  padding-bottom: 40px;
+}
+
+/* ---------------- header / terminal title bar ---------------- */
+
+.blog-title {
+  background-color: var(--crt-bg-panel);
+  border-bottom: 1px solid var(--crt-border);
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  font-size: 1.05em;
+  word-break: break-word;
+}
+
+.blog-title-special-user {
+  color: var(--phosphor-bright);
+}
+
+.blog-title-special-host {
+  color: #ffffff;
+}
+
+.blog-title-special-path {
+  color: var(--phosphor-dim);
+}
+
+.blog-title-special-chars {
+  color: var(--phosphor-dim);
+}
+
+.blink {
+  animation: blinker 1s step-start infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---------------- post list / summary ---------------- */
+
+.summary-tags {
+  font-size: 0.8em;
+  color: var(--phosphor-dim);
+  display: inline-block;
+  padding: 0 2px;
+}
+
+main > div > a {
+  font-size: 1.1em;
+}
+
+/* ---------------- single post ---------------- */
+
+article time {
+  color: var(--phosphor-dim);
+}
+
+/* ---------------- sidebar ---------------- */
+
+.sidebar-title {
+  color: #ffffff;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px dashed var(--crt-border);
+  padding-bottom: 8px;
+  margin-top: 24px;
+  margin-bottom: 10px;
+}
+
+.sidebar-title:first-child {
+  margin-top: 0;
+}
+
+.sidebar-item {
+  padding-bottom: 6px;
+  font-size: 0.9em;
+}
+
+.sidebar-tag {
+  display: inline-block;
+  padding: 2px 6px;
+  margin: 0 4px 6px 0;
+  border: 1px solid var(--crt-border);
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.sidebar-tag:hover {
+  border-color: var(--phosphor-bright);
+}
+
+/* ---------------- footer ---------------- */
+
+footer {
+  border-top: 1px solid var(--crt-border);
+  margin-top: 20px;
+}
+
+.foot-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 20px 50px;
+}
+
+.flex-footer-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.flex-footer-about {
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+.flex-footer-social-icons {
+  text-align: right;
+}
+
+.footer-social-icons {
+  width: 20px;
+  height: 20px;
+  margin-left: 14px;
+  fill: var(--phosphor);
+}
+
+.footer-social-icons:hover {
+  fill: #ffffff;
+}
+
+/* ---------------- code blocks (chroma) ---------------- */
+
+code {
+  font-family: "VT323", "Share Tech Mono", "Courier New", monospace;
+  font-size: 1.05em;
+}
+
+.chroma {
+  background-color: var(--crt-bg-panel) !important;
+  border: 1px solid var(--crt-border);
+  padding: 12px 14px;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+p > code,
+li > code {
+  background-color: var(--crt-bg-panel);
+  border: 1px solid var(--crt-border);
+  padding: 1px 5px;
+}
+
+/* chroma syntax highlighting — stays within the phosphor-green family
+   so code doesn't break the monochrome CRT illusion, but keywords/
+   strings/comments get distinct brightness/weight for scannability */
+.chroma .k,
+.chroma .kc,
+.chroma .kd,
+.chroma .kn,
+.chroma .kr,
+.chroma .kt {
+  color: var(--phosphor-bright);
+  font-weight: bold;
+}
+
+.chroma .kp {
+  color: var(--phosphor-bright);
+}
+
+.chroma .s,
+.chroma .s1,
+.chroma .s2,
+.chroma .sa,
+.chroma .sb,
+.chroma .sc,
+.chroma .sd,
+.chroma .se,
+.chroma .sh,
+.chroma .si,
+.chroma .sx,
+.chroma .sr,
+.chroma .ss {
+  color: #ffffff;
+}
+
+.chroma .c,
+.chroma .c1,
+.chroma .cm,
+.chroma .cs,
+.chroma .cp,
+.chroma .cpf {
+  color: var(--phosphor-dim);
+  font-style: italic;
+}
+
+.chroma .nf,
+.chroma .nc,
+.chroma .nn,
+.chroma .nb,
+.chroma .nd {
+  color: var(--phosphor-bright);
+}
+
+.chroma .mi,
+.chroma .mf,
+.chroma .mo,
+.chroma .mh,
+.chroma .il {
+  color: #ffffff;
+}
+
+.chroma .o,
+.chroma .ow {
+  color: var(--phosphor-bright);
+}
+
+.chroma .err {
+  color: #ff5555;
+  background-color: transparent;
+}
+
+.chroma .lnt,
+.chroma .ln {
+  color: var(--phosphor-dim);
+}
+
+.chroma .hl {
+  background-color: rgba(51, 255, 51, 0.12);
+}
+
+/* ---------------- responsive ---------------- */
+
+@media only screen and (max-width: 900px) {
+  .flex-wrapper {
+    flex-direction: column;
+    padding: 0 16px;
+  }
+
+  .flex-main {
+    max-width: 100%;
+  }
+
+  .flex-sidebar {
+    width: 100%;
+    border-left: none;
+    border-top: 1px dashed var(--crt-border);
+    padding-left: 0;
+    padding-top: 16px;
+    margin-top: 10px;
+  }
+
+  body {
+    font-size: 18px;
+  }
+}
