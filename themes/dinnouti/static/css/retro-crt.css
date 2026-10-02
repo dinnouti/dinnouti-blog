@@ -414,6 +414,15 @@ main {
 .tag-lg { font-size: 0.98em; color: var(--phosphor-bright); border-color: var(--phosphor-dim); }
 .tag-xl { font-size: 1.1em; color: var(--crt-white); border-color: var(--phosphor-bright); font-weight: bold; }
 
+.tag-cloud-full {
+  gap: 10px;
+}
+
+.tag-count {
+  opacity: 0.6;
+  font-size: 0.85em;
+}
+
 .sidebar-postlist {
   list-style: none;
   margin: 0;

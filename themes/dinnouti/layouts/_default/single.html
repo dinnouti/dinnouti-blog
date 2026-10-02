@@ -10,7 +10,7 @@
     <div class="summary-tags">
       <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
       {{ range .Params.tags }}
-      <a class="no-underline" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">#{{ lower . }}</a>
+      <a class="no-underline" href="{{ ($.Site.GetPage (printf "/tags/%s" (. | urlize))).RelPermalink }}">#{{ lower . }}</a>
       {{ end }}
     </div>
 

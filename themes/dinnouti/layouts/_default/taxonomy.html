@@ -1,0 +1,21 @@
+{{ define "main" }}
+<main>
+  <div class="list-header">
+    <span class="list-prompt">$ ls -la ./tags</span>
+    <h1>{{ .Title }}</h1>
+  </div>
+
+  <div class="tag-cloud tag-cloud-full">
+    {{ $tags := .Site.Taxonomies.tags }}
+    {{ $maxCount := 1 }}
+    {{ range $tags }}{{ if gt (len .Pages) $maxCount }}{{ $maxCount = len .Pages }}{{ end }}{{ end }}
+    {{ range $tags.ByCount.Reverse }}
+      {{ $count := len .Pages }}
+      {{ $weight := div (mul $count 100) $maxCount }}
+      {{ $tier := "tag-sm" }}
+      {{ if ge $weight 75 }}{{ $tier = "tag-xl" }}{{ else if ge $weight 50 }}{{ $tier = "tag-lg" }}{{ else if ge $weight 25 }}{{ $tier = "tag-md" }}{{ end }}
+      <a class="no-underline sidebar-tag {{ $tier }}" href="{{ .Page.Permalink }}">#{{ lower .Page.Title }} <span class="tag-count">({{ $count }})</span></a>
+    {{ end }}
+  </div>
+</main>
+{{ end }}
