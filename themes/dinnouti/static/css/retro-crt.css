@@ -1,15 +1,18 @@
 /* ======================================================================
-   Retro Terminal (80s Phosphor CRT) — written from scratch
-   Theme: green phosphor on black, scanlines, glow, flicker.
+   Retro Terminal (80s Phosphor CRT) — full theme, built from scratch
    ====================================================================== */
 
 :root {
   --phosphor: #33ff33;
   --phosphor-bright: #7dff7d;
   --phosphor-dim: #1b8f1b;
-  --crt-bg: #061006;
+  --phosphor-dimmer: #0f5c0f;
+  --crt-bg: #050d05;
   --crt-bg-panel: #0a1a0a;
+  --crt-bg-panel-2: #0d220d;
   --crt-border: #1f5c1f;
+  --crt-border-bright: #33ff33;
+  --crt-white: #e8ffe8;
   --crt-shadow: 0 0 2px rgba(51, 255, 51, 0.8), 0 0 6px rgba(51, 255, 51, 0.4);
 }
 
@@ -17,8 +20,7 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
   background-color: var(--crt-bg);
@@ -29,30 +31,45 @@ body {
   font-family: "Share Tech Mono", "Courier New", monospace;
   font-size: 17px;
   line-height: 1.65;
-  /* no text-shadow here: glow reads fine on big headers, but it blurs
-     long paragraphs and makes body copy tiring to read. Glow is applied
-     selectively below, only to headers/titles/chrome. */
   position: relative;
   min-height: 100vh;
 }
 
-/* glow reserved for large/short text: headers, nav chrome, titles */
+/* glow reserved for large/short text: headers, nav chrome, titles.
+   Long body copy stays shadow-free so it doesn't blur/tire the eyes. */
 .glow,
 h1, h2, h3, h4, h5, h6,
-.blog-title,
-.sidebar-title {
+.terminal-header,
+.sidebar-title,
+.post-pager-label,
+.error-ascii {
   text-shadow: var(--crt-shadow);
 }
 
-/* CRT scanline + vignette overlay, fixed over the whole viewport */
+/* skip link */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--crt-bg-panel);
+  color: var(--phosphor-bright);
+  padding: 8px 14px;
+  border: 1px solid var(--crt-border-bright);
+  z-index: 10001;
+}
+
+.skip-link:focus {
+  left: 10px;
+  top: 10px;
+}
+
+/* CRT scanline + vignette overlay */
 body::before {
   content: "";
   pointer-events: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   z-index: 9999;
   background-image: repeating-linear-gradient(
     to bottom,
@@ -68,19 +85,12 @@ body::after {
   content: "";
   pointer-events: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   z-index: 9998;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(0, 0, 0, 0) 60%,
-    rgba(0, 0, 0, 0.55) 100%
-  );
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,0.55) 100%);
 }
 
-/* subtle brightness flicker, cheap and not seizure-inducing */
 @keyframes crt-flicker {
   0%, 100% { opacity: 1; }
   48% { opacity: 1; }
@@ -92,16 +102,21 @@ body {
   animation: crt-flicker 6s infinite;
 }
 
+/* focus states (keyboard accessibility) */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--phosphor-bright);
+  outline-offset: 2px;
+}
+
 a {
   color: var(--phosphor-bright);
   text-decoration: none;
 }
 
-a:hover,
-a:focus {
-  color: #ffffff;
+a:hover, a:focus {
+  color: var(--crt-white);
   text-decoration: underline;
-  outline: none;
 }
 
 a.no-underline {
@@ -123,17 +138,13 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.6em;
 }
 
-h1 { font-size: 1.8em; }
+h1 { font-size: 1.9em; }
 h2 { font-size: 1.5em; }
 h3 { font-size: 1.25em; }
 
-p {
-  margin: 0 0 1em 0;
-}
+p { margin: 0 0 1em 0; }
 
-ul, ol {
-  padding-left: 1.4em;
-}
+ul, ol { padding-left: 1.4em; }
 
 blockquote {
   border-left: 3px solid var(--crt-border);
@@ -142,13 +153,29 @@ blockquote {
   color: var(--phosphor-dim);
 }
 
+img {
+  max-width: 100%;
+  border: 1px solid var(--crt-border);
+}
+
+figure {
+  text-align: center;
+  margin: 1.4em 0;
+}
+
+figcaption {
+  font-size: 0.85em;
+  color: var(--phosphor-dim);
+  margin-top: 6px;
+}
+
 /* ---------------- layout ---------------- */
 
 .flex-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  column-gap: 30px;
+  column-gap: 36px;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
@@ -156,7 +183,7 @@ blockquote {
 
 .flex-main {
   width: 100%;
-  max-width: 760px;
+  max-width: 740px;
   min-width: 0;
 }
 
@@ -164,108 +191,263 @@ blockquote {
   width: 280px;
   flex-shrink: 0;
   border-left: 1px dashed var(--crt-border);
-  padding-left: 20px;
+  padding-left: 22px;
 }
 
 main {
-  padding-bottom: 40px;
+  padding-bottom: 50px;
 }
 
-/* ---------------- header / terminal title bar ---------------- */
+/* ---------------- terminal header ---------------- */
 
-.blog-title {
-  background-color: var(--crt-bg-panel);
+.terminal-header {
+  margin-bottom: 24px;
+}
+
+.terminal-header-bar {
+  background: var(--crt-bg-panel-2);
   border-bottom: 1px solid var(--crt-border);
-  padding: 18px 20px;
-  margin-bottom: 20px;
-  font-size: 1.05em;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.terminal-dot-red { background: #5c1f1f; }
+.terminal-dot-yellow { background: #5c531f; }
+.terminal-dot-green { background: var(--phosphor-dim); }
+
+.terminal-header-label {
+  margin-left: 10px;
+  font-size: 0.8em;
+  color: var(--phosphor-dim);
+}
+
+.terminal-prompt-line {
+  background: var(--crt-bg-panel);
+  padding: 16px 14px;
+  font-size: 1em;
   word-break: break-word;
 }
 
-.blog-title-special-user {
-  color: var(--phosphor-bright);
-}
-
-.blog-title-special-host {
-  color: #ffffff;
-}
-
-.blog-title-special-path {
-  color: var(--phosphor-dim);
-}
-
-.blog-title-special-chars {
-  color: var(--phosphor-dim);
-}
+.blog-title-special-user { color: var(--phosphor-bright); font-weight: bold; }
+.blog-title-special-at { color: var(--phosphor-dim); }
+.blog-title-special-host-text { color: var(--crt-white); }
+.blog-title-special-path { color: var(--phosphor-dim); }
+.blog-title-special-chars { color: var(--phosphor-bright); margin: 0 6px; }
+.blog-title-command { color: var(--phosphor); }
 
 .blink {
   animation: blinker 1s step-start infinite;
 }
 
-@keyframes blinker {
-  50% {
-    opacity: 0;
-  }
+@keyframes blinker { 50% { opacity: 0; } }
+
+/* ---------------- feed / post cards ---------------- */
+
+.feed-intro {
+  color: var(--phosphor-dim);
+  font-size: 0.9em;
+  margin-bottom: 16px;
 }
 
-/* ---------------- post list / summary ---------------- */
+.list-header {
+  margin-bottom: 20px;
+}
+
+.list-prompt {
+  display: block;
+  color: var(--phosphor-dim);
+  font-size: 0.85em;
+  margin-bottom: 4px;
+}
+
+.post-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.post-card {
+  border: 1px solid var(--crt-border);
+  background: var(--crt-bg-panel);
+  padding: 16px 18px;
+  transition: border-color 0.15s ease;
+}
+
+.post-card:hover {
+  border-color: var(--crt-border-bright);
+}
+
+.post-card-title {
+  margin: 0 0 6px 0;
+  font-size: 1.15em;
+}
+
+.post-card-excerpt {
+  color: var(--phosphor-bright);
+  font-size: 0.95em;
+  margin: 10px 0 8px 0;
+}
+
+.post-card-more {
+  font-size: 0.85em;
+  color: var(--phosphor-dim);
+}
+
+.post-card-more:hover {
+  color: var(--crt-white);
+}
 
 .summary-tags {
   font-size: 0.8em;
   color: var(--phosphor-dim);
-  display: inline-block;
-  padding: 0 2px;
 }
 
-main > div > a {
-  font-size: 1.1em;
+.summary-tags time {
+  margin-right: 6px;
+}
+
+.summary-tags a {
+  color: var(--phosphor-dim);
+  margin-right: 4px;
+}
+
+.summary-tags a:hover {
+  color: var(--crt-white);
 }
 
 /* ---------------- single post ---------------- */
 
-article p,
-article li {
+.post-breadcrumb {
+  margin-bottom: 14px;
+  font-size: 0.85em;
+}
+
+.post-breadcrumb a {
+  color: var(--phosphor-dim);
+}
+
+.post-body p,
+.post-body li {
   color: var(--phosphor-bright);
+}
+
+.post-body a {
+  color: var(--phosphor-bright);
+  text-decoration: underline;
+  text-decoration-color: var(--phosphor-dim);
+}
+
+.post-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 36px;
+  border-top: 1px dashed var(--crt-border);
+  padding-top: 16px;
+}
+
+.post-pager-link {
+  display: flex;
+  flex-direction: column;
+  max-width: 48%;
+}
+
+.post-pager-prev { text-align: right; margin-left: auto; }
+
+.post-pager-label {
+  font-size: 0.8em;
+  color: var(--phosphor-dim);
+}
+
+.post-pager-title {
+  color: var(--phosphor-bright);
+  font-size: 0.9em;
 }
 
 /* ---------------- sidebar ---------------- */
 
+.sidebar-section {
+  margin-bottom: 28px;
+}
+
 .sidebar-title {
-  color: #ffffff;
+  color: var(--crt-white);
   font-weight: normal;
-  text-transform: uppercase;
   letter-spacing: 1px;
   border-bottom: 1px dashed var(--crt-border);
   padding-bottom: 8px;
-  margin-top: 24px;
-  margin-bottom: 10px;
+  margin: 0 0 12px 0;
+  font-size: 1.1em;
 }
 
-.sidebar-title:first-child {
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sidebar-tag {
+  display: inline-block;
+  padding: 2px 7px;
+  border: 1px solid var(--crt-border);
+  font-size: 0.78em;
+  white-space: nowrap;
+  color: var(--phosphor-dim);
+}
+
+.sidebar-tag:hover {
+  border-color: var(--crt-border-bright);
+  color: var(--crt-white);
+}
+
+.tag-sm { font-size: 0.72em; opacity: 0.8; }
+.tag-md { font-size: 0.85em; color: var(--phosphor); }
+.tag-lg { font-size: 0.98em; color: var(--phosphor-bright); border-color: var(--phosphor-dim); }
+.tag-xl { font-size: 1.1em; color: var(--crt-white); border-color: var(--phosphor-bright); font-weight: bold; }
+
+.sidebar-postlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-year {
+  color: var(--phosphor-dim);
+  font-size: 0.8em;
+  margin: 14px 0 4px 0;
+  letter-spacing: 1px;
+}
+
+.sidebar-year:first-child {
   margin-top: 0;
 }
 
 .sidebar-item {
   padding-bottom: 6px;
-  font-size: 0.9em;
+  font-size: 0.88em;
+  padding-left: 10px;
 }
 
-.sidebar-tag {
-  display: inline-block;
-  padding: 2px 6px;
-  margin: 0 4px 6px 0;
-  border: 1px solid var(--crt-border);
-  font-size: 0.85em;
-  white-space: nowrap;
+.sidebar-item a {
+  color: var(--phosphor);
 }
 
-.sidebar-tag:hover {
-  border-color: var(--phosphor-bright);
+.sidebar-item a:hover {
+  color: var(--crt-white);
 }
 
 /* ---------------- footer ---------------- */
 
-footer {
+.site-footer {
   border-top: 1px solid var(--crt-border);
   margin-top: 20px;
 }
@@ -286,29 +468,52 @@ footer {
 
 .flex-footer-about {
   font-size: 0.9em;
-  line-height: 1.6;
+  line-height: 1.7;
+}
+
+.footer-prompt {
+  color: var(--phosphor-dim);
 }
 
 .flex-footer-social-icons {
-  text-align: right;
+  display: flex;
+  align-items: center;
 }
 
 .footer-social-icons {
   width: 20px;
   height: 20px;
   margin-left: 14px;
-  fill: var(--phosphor);
+  fill: var(--phosphor-dim);
 }
 
 .footer-social-icons:hover {
-  fill: #ffffff;
+  fill: var(--crt-white);
+}
+
+/* ---------------- 404 ---------------- */
+
+.error-page {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.error-ascii {
+  color: var(--phosphor-bright);
+  font-size: 0.85em;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.error-line {
+  margin: 6px 0;
 }
 
 /* ---------------- code blocks (chroma) ---------------- */
 
 code {
-  font-family: "VT323", "Share Tech Mono", "Courier New", monospace;
-  font-size: 1.05em;
+  font-family: "Share Tech Mono", "Courier New", monospace;
+  font-size: 0.95em;
 }
 
 .chroma {
@@ -326,83 +531,39 @@ li > code {
   padding: 1px 5px;
 }
 
-/* chroma syntax highlighting — stays within the phosphor-green family
-   so code doesn't break the monochrome CRT illusion, but keywords/
-   strings/comments get distinct brightness/weight for scannability */
-.chroma .k,
-.chroma .kc,
-.chroma .kd,
-.chroma .kn,
-.chroma .kr,
-.chroma .kt {
+.chroma .k, .chroma .kc, .chroma .kd, .chroma .kn, .chroma .kr, .chroma .kt {
   color: var(--phosphor-bright);
   font-weight: bold;
 }
 
-.chroma .kp {
-  color: var(--phosphor-bright);
-}
+.chroma .kp { color: var(--phosphor-bright); }
 
-.chroma .s,
-.chroma .s1,
-.chroma .s2,
-.chroma .sa,
-.chroma .sb,
-.chroma .sc,
-.chroma .sd,
-.chroma .se,
-.chroma .sh,
-.chroma .si,
-.chroma .sx,
-.chroma .sr,
+.chroma .s, .chroma .s1, .chroma .s2, .chroma .sa, .chroma .sb, .chroma .sc,
+.chroma .sd, .chroma .se, .chroma .sh, .chroma .si, .chroma .sx, .chroma .sr,
 .chroma .ss {
-  color: #ffffff;
+  color: var(--crt-white);
 }
 
-.chroma .c,
-.chroma .c1,
-.chroma .cm,
-.chroma .cs,
-.chroma .cp,
-.chroma .cpf {
+.chroma .c, .chroma .c1, .chroma .cm, .chroma .cs, .chroma .cp, .chroma .cpf {
   color: var(--phosphor-dim);
   font-style: italic;
 }
 
-.chroma .nf,
-.chroma .nc,
-.chroma .nn,
-.chroma .nb,
-.chroma .nd {
+.chroma .nf, .chroma .nc, .chroma .nn, .chroma .nb, .chroma .nd {
   color: var(--phosphor-bright);
 }
 
-.chroma .mi,
-.chroma .mf,
-.chroma .mo,
-.chroma .mh,
-.chroma .il {
-  color: #ffffff;
+.chroma .mi, .chroma .mf, .chroma .mo, .chroma .mh, .chroma .il {
+  color: var(--crt-white);
 }
 
-.chroma .o,
-.chroma .ow {
-  color: var(--phosphor-bright);
-}
+.chroma .o, .chroma .ow { color: var(--phosphor-bright); }
 
-.chroma .err {
-  color: #ff5555;
-  background-color: transparent;
-}
+.chroma .err { color: #ff5555; background-color: transparent; }
 
-.chroma .lnt,
-.chroma .ln {
-  color: var(--phosphor-dim);
-}
+.chroma .lnt, .chroma .ln { color: var(--phosphor-dim); }
 
-.chroma .hl {
-  background-color: rgba(51, 255, 51, 0.12);
-}
+.chroma .hl { background-color: rgba(51, 255, 51, 0.12); }
 
 /* ---------------- responsive ---------------- */
 
@@ -412,9 +573,7 @@ li > code {
     padding: 0 16px;
   }
 
-  .flex-main {
-    max-width: 100%;
-  }
+  .flex-main { max-width: 100%; }
 
   .flex-sidebar {
     width: 100%;
@@ -425,7 +584,16 @@ li > code {
     margin-top: 10px;
   }
 
-  body {
-    font-size: 18px;
+  .post-pager {
+    flex-direction: column;
   }
+
+  .post-pager-link,
+  .post-pager-prev {
+    max-width: 100%;
+    text-align: left;
+    margin-left: 0;
+  }
+
+  body { font-size: 16px; }
 }

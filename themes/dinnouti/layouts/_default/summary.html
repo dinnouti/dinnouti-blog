@@ -1,18 +1,20 @@
-<div style='padding-bottom: 15px'>
-	<a class='no-underline' href="{{ .Permalink }}">
-		{{ .Title }}
-	</a>
-	<br>
+<article class="post-card">
+  <h2 class="post-card-title">
+    <a class="no-underline" href="{{ .Permalink }}">{{ .Title }}</a>
+  </h2>
 
-	<div class='summary-tags'>
-		<time>
-			{{.Date.Format "2006-01-02"}}
-		</time>
+  <div class="summary-tags">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+    {{ range .Params.tags }}
+    <a class="no-underline" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">#{{ lower . }}</a>
+    {{ end }}
+  </div>
 
-		{{ range .Params.tags }}
-		<a class='no-underline' href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">
-			#{{lower . }}
-		</a>
-		{{ end }}
-	</div>
-</div>
+  {{ if .Params.description }}
+  <p class="post-card-excerpt">{{ .Params.description }}</p>
+  {{ else }}
+  <p class="post-card-excerpt">{{ .Summary | plainify | htmlUnescape | truncate 160 }}</p>
+  {{ end }}
+
+  <a class="no-underline post-card-more" href="{{ .Permalink }}">read more &rarr;</a>
+</article>

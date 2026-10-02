@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 {{- partial "head.html" . -}}
 
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
     {{- partial "header.html" . -}}
-    <div class='flex-wrapper'>
-        <div class='flex-main'>
+
+    <div class="flex-wrapper">
+        <div class="flex-main" id="main-content">
             {{- block "main" . }}{{- end }}
         </div>
-        <div class='flex-sidebar'>
+        <aside class="flex-sidebar" aria-label="Site navigation">
             {{- partial "sidebar.html" . -}}
-        </div>
+        </aside>
     </div>
+
     {{- partial "footer.html" . -}}
-
     {{- partial "foot.html" . -}}
-
 </body>
 
 </html>

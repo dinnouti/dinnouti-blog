@@ -1,0 +1,14 @@
+{{ define "main" }}
+<main class="error-page">
+  <pre class="error-ascii" aria-hidden="true">
+  ╔══════════════════════════════╗
+  ║   SEGMENTATION FAULT (404)   ║
+  ╚══════════════════════════════╝
+  </pre>
+  <p class="error-line">$ cd {{ .RelPermalink }}</p>
+  <p class="error-line">bash: no such file or directory</p>
+  <p class="error-line">
+    <a class="no-underline" href="{{ .Site.Home.RelPermalink }}">$ cd ~ &amp;&amp; ls</a>
+  </p>
+</main>
+{{ end }}

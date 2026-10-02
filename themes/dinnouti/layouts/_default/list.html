@@ -1,12 +1,16 @@
 {{ define "main" }}
-<!-- list.html -->
 <main>
-	<h1>{{ .Title }}</h1>
-	<div style='padding-bottom:3px;'>&nbsp;</div>
+  <div class="list-header">
+    <span class="list-prompt">$ grep -rl "{{ .Title }}" ./posts</span>
+    <h1>{{ .Title }}</h1>
+  </div>
 
-	{{ range .Paginator.Pages }}
-    {{ .Render "summary" }}
-	{{ end }}
+  <div class="post-feed">
+    {{ range .Paginator.Pages }}
+      {{ .Render "summary" }}
+    {{ end }}
+  </div>
+
+  {{ template "_internal/pagination.html" . }}
 </main>
-
 {{ end }}

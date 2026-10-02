@@ -1,22 +1,48 @@
 {{ define "main" }}
 <main>
-	<article>
-		<h1>{{ .Title }}</h1>
+  <nav class="post-breadcrumb">
+    <a class="no-underline" href="{{ .Site.Home.RelPermalink }}">&larr; cd ..</a>
+  </nav>
 
-		<div class='summary-tags'>
-			<time>
-				{{.Date.Format "2006-01-02"}}
-			</time>
+  <article>
+    <h1>{{ .Title }}</h1>
 
-			{{ range .Params.tags }}
-			<a class='no-underline' href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">
-				#{{lower . }}
-			</a>
-			{{ end }}
-		</div>
+    <div class="summary-tags">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      {{ range .Params.tags }}
+      <a class="no-underline" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">#{{ lower . }}</a>
+      {{ end }}
+    </div>
 
-        {{ .Content }}
+    <div class="post-body">
+      {{ .Content }}
+    </div>
+  </article>
 
-	</article>
+  {{ $pages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections }}
+  {{ $pages = $pages.ByDate.Reverse }}
+  {{ $index := -1 }}
+  {{ range $i, $p := $pages }}{{ if eq $p.Permalink $.Permalink }}{{ $index = $i }}{{ end }}{{ end }}
+  {{ if ge $index 0 }}
+  <nav class="post-pager" aria-label="Post navigation">
+    {{ if gt $index 0 }}
+    {{ $newer := index $pages (sub $index 1) }}
+    <a class="no-underline post-pager-link post-pager-next" href="{{ $newer.RelPermalink }}">
+      <span class="post-pager-label">newer &rarr;</span>
+      <span class="post-pager-title">{{ $newer.Title }}</span>
+    </a>
+    {{ else }}
+    <span></span>
+    {{ end }}
+
+    {{ if lt (add $index 1) (len $pages) }}
+    {{ $older := index $pages (add $index 1) }}
+    <a class="no-underline post-pager-link post-pager-prev" href="{{ $older.RelPermalink }}">
+      <span class="post-pager-label">&larr; older</span>
+      <span class="post-pager-title">{{ $older.Title }}</span>
+    </a>
+    {{ end }}
+  </nav>
+  {{ end }}
 </main>
 {{ end }}

@@ -1,17 +1,32 @@
-<div class='sidebar-title'>Tag Cloud</div>
+<nav class="sidebar-section" aria-label="Tags">
+  <h2 class="sidebar-title">// tags</h2>
+  <div class="tag-cloud">
+    {{ $tags := .Site.Taxonomies.tags }}
+    {{ $maxCount := 1 }}
+    {{ range $tags }}{{ if gt (len .Pages) $maxCount }}{{ $maxCount = len .Pages }}{{ end }}{{ end }}
+    {{ range $tags.ByCount.Reverse }}
+      {{ $count := len .Pages }}
+      {{ $weight := div (mul $count 100) $maxCount }}
+      {{ $tier := "tag-sm" }}
+      {{ if ge $weight 75 }}{{ $tier = "tag-xl" }}{{ else if ge $weight 50 }}{{ $tier = "tag-lg" }}{{ else if ge $weight 25 }}{{ $tier = "tag-md" }}{{ end }}
+      <a class="no-underline sidebar-tag {{ $tier }}" href="{{ .Page.Permalink }}" title="{{ $count }} post{{ if ne $count 1 }}s{{ end }}">#{{ lower .Page.Title }}</a>
+    {{ end }}
+  </div>
+</nav>
 
-{{ range .Site.Taxonomies.tags }}
-<a class='no-underline sidebar-tag' href="{{ .Page.Permalink }}">
-    #{{- lower  .Page.Title -}}
-</a>
-{{ end }}
-
-
-<div class='sidebar-title'>Latest posts</div>
-
-{{ range first 20 (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
-<div class='sidebar-item'>
-    &bull;&nbsp;<a class='no-underline' href="{{ .RelPermalink }}"> {{- .Title -}} </a>
-</div>
-{{ end }}
-
+<nav class="sidebar-section" aria-label="Latest posts">
+  <h2 class="sidebar-title">// log --oneline</h2>
+  <ul class="sidebar-postlist">
+    {{ $lastYear := "" }}
+    {{ range first 20 (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
+      {{ $year := .Date.Format "2006" }}
+      {{ if ne $year $lastYear }}
+        <li class="sidebar-year">{{ $year }}</li>
+        {{ $lastYear = $year }}
+      {{ end }}
+      <li class="sidebar-item">
+        <a class="no-underline" href="{{ .RelPermalink }}">{{ .Title }}</a>
+      </li>
+    {{ end }}
+  </ul>
+</nav>
