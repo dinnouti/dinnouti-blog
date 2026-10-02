@@ -26,12 +26,22 @@ body {
 
 body {
   color: var(--phosphor);
-  font-family: "VT323", "Share Tech Mono", "Courier New", monospace;
-  font-size: 19px;
-  line-height: 1.5;
-  text-shadow: var(--crt-shadow);
+  font-family: "Share Tech Mono", "Courier New", monospace;
+  font-size: 17px;
+  line-height: 1.65;
+  /* no text-shadow here: glow reads fine on big headers, but it blurs
+     long paragraphs and makes body copy tiring to read. Glow is applied
+     selectively below, only to headers/titles/chrome. */
   position: relative;
   min-height: 100vh;
+}
+
+/* glow reserved for large/short text: headers, nav chrome, titles */
+.glow,
+h1, h2, h3, h4, h5, h6,
+.blog-title,
+.sidebar-title {
+  text-shadow: var(--crt-shadow);
 }
 
 /* CRT scanline + vignette overlay, fixed over the whole viewport */
@@ -48,8 +58,8 @@ body::before {
     to bottom,
     rgba(0, 0, 0, 0) 0px,
     rgba(0, 0, 0, 0) 1px,
-    rgba(0, 0, 0, 0.25) 2px,
-    rgba(0, 0, 0, 0.25) 3px
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 3px
   );
   mix-blend-mode: multiply;
 }
@@ -106,6 +116,7 @@ hr {
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--phosphor-bright);
+  font-family: "VT323", "Share Tech Mono", "Courier New", monospace;
   font-weight: normal;
   letter-spacing: 0.5px;
   margin-top: 1.4em;
@@ -212,8 +223,9 @@ main > div > a {
 
 /* ---------------- single post ---------------- */
 
-article time {
-  color: var(--phosphor-dim);
+article p,
+article li {
+  color: var(--phosphor-bright);
 }
 
 /* ---------------- sidebar ---------------- */
