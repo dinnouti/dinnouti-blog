@@ -8,58 +8,87 @@
     }}
   </title>
 
-  <meta
-    name="description"
-    content="{{ if .Params.description }}{{ .Params.description }}{{ else }}Alex Dinnouti technical blog{{ end }}"
-  />
+  {{ $desc := "" }}
+  {{ if .Params.description }}{{ $desc = .Params.description }}
+  {{ else if .IsHome }}{{ $desc = (printf "%s — technical blog by %s. Posts on AWS, Python, and infrastructure." .Site.Title .Site.Params.author.name) }}
+  {{ else if .IsPage }}{{ $desc = .Summary | plainify | htmlUnescape | truncate 160 }}
+  {{ else }}{{ $desc = (printf "%s — %s" .Title .Site.Title) }}
+  {{ end }}
 
-  <!-- Google Structured Data -->
-  <script type="application/ld+json">
-    {
-        "@context" : "http://schema.org",
-        "@type" : "BlogPosting",
-        "mainEntityOfPage": {
-             "@type": "WebPage",
-             "@id": "{{ .Site.BaseURL }}"
-        },
-        "articleSection" : "{{ .Section }}",
-        "name" : "{{ .Title }}",
-        "headline" : "{{ .Title }}",
-        "description" : "{{ if .Description }}{{ .Description }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ end }}{{ end }}",
-        "inLanguage" : "en-US",
-        "author" : "{{ range .Site.Author }}{{ . }}{{ end }}",
-        "creator" : "{{ range .Site.Author }}{{ . }}{{ end }}",
-        "publisher": "{{ range .Site.Author }}{{ . }}{{ end }}",
-        "accountablePerson" : "{{ range .Site.Author }}{{ . }}{{ end }}",
-        "copyrightHolder" : "{{ range .Site.Author }}{{ . }}{{ end }}",
-        "copyrightYear" : "{{ .Date.Format "2006" }}",
-        "datePublished": "{{ .Date }}",
-        "dateModified" : "{{ .Date }}",
-        "url" : "{{ .Permalink }}",
-        "wordCount" : "{{ .WordCount }}",
-        "keywords" : [ {{ if isset .Params "tags" }}{{ range .Params.tags }}"{{ . }}",{{ end }}{{ end }}"Blog" ]
-    }
-  </script>
-  
-  <!-- Open Grapth -->
-  {{ template "_internal/opengraph.html" . }}
+  <meta name="description" content="{{ $desc }}" />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="canonical" href="{{ .Permalink }}" />
+
+  <!-- Feed discovery: lets readers, aggregators, and agents find the RSS feed -->
+  {{ with .OutputFormats.Get "rss" }}
+  <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Site.Title }}" />
+  {{ end }}
+
+  <!-- Plain-markdown alternate of this page, for agents that prefer
+       content without HTML/CSS/JS (see https://llmstxt.org/) -->
+  {{ with .OutputFormats.Get "md" }}
+  <link rel="alternate" type="text/markdown" href="{{ .Permalink }}" />
+  {{ end }}
+
+  <!-- Structured data: BlogPosting for actual posts, WebSite for everything else
+       (list/tag/home pages aren't articles, so they shouldn't claim to be) -->
+  {{ if and .IsPage (eq .Type "posts") }}
+  {{ $ld := dict
+      "@context" "https://schema.org"
+      "@type" "BlogPosting"
+      "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+      "headline" .Title
+      "description" $desc
+      "inLanguage" "en-US"
+      "author" (dict "@type" "Person" "name" .Site.Params.author.name)
+      "publisher" (dict "@type" "Person" "name" .Site.Params.author.name)
+      "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")
+      "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+      "url" .Permalink
+      "wordCount" .WordCount
+      "keywords" .Params.tags
+  }}
+  <script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
+  {{ else }}
+  {{ $ld := dict
+      "@context" "https://schema.org"
+      "@type" "WebSite"
+      "name" .Site.Title
+      "description" $desc
+      "url" .Site.BaseURL
+      "author" (dict "@type" "Person" "name" .Site.Params.author.name)
+  }}
+  <script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
+  {{ end }}
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ if ne .Site.Title .Title }}{{ .Title }}{{ else }}{{ .Site.Title }}{{ end }}" />
+  <meta property="og:description" content="{{ $desc }}" />
+  <meta property="og:type" content="{{ if and .IsPage (eq .Type "posts") }}article{{ else }}website{{ end }}" />
+  <meta property="og:url" content="{{ .Permalink }}" />
+  {{ if and .IsPage (eq .Type "posts") }}
+  <meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}" />
+  {{ range .Params.tags }}
+  <meta property="article:tag" content="{{ . }}" />
+  {{ end }}
+  {{ end }}
 
   <!-- Twitter -->
-  {{ template "_internal/twitter_cards.html" . }}
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="{{ if ne .Site.Title .Title }}{{ .Title }}{{ else }}{{ .Site.Title }}{{ end }}" />
+  <meta name="twitter:description" content="{{ $desc }}" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&family=Source+Sans+Pro&family=Fira+Code&display=swap"
+    href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap"
     rel="stylesheet"
   />
 
-<link rel="stylesheet" href="/css/catppuccin-macchiato.css" />
-<link rel="stylesheet" href="/css/main-night.css" />
-  
+  <link rel="stylesheet" href="{{ "css/retro-crt.css" | relURL }}" />
 
   <!-- mixpanel.com -->
   {{ partial "mixpanel.html" . }}
-  
 
 </head>

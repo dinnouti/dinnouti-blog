@@ -1,4 +1,4 @@
-Powered by [Hugo](https://gohugo.io/). Hosted at Amazon Web Services using [AWS Amplify Console](https://aws.amazon.com/amplify/) provides a Git-based workflow for hosting fullstack serverless web apps and static websites with continuous deployment.
+Powered by [Hugo](https://gohugo.io/). Hosted on AWS using a simple S3 bucket + CloudFront distribution for static site delivery.
 
 Theme based on [siegerts/hugo-theme-basic](https://github.com/siegerts/hugo-theme-basic).
 ## Creating new post and pages
@@ -10,7 +10,7 @@ hugo new <page-name>.md
 
 ## Deploying
 
-The content is deployed with [AWS Amplify Console](https://aws.amazon.com/amplify/console/). The instructions below is for a S3 and CloudFront deployment
+The content is deployed to S3 + CloudFront.
 
 ```bash
 # minify the content

@@ -1,8 +1,16 @@
+<header class="terminal-header" role="banner">
+  <div class="terminal-header-bar">
+    <span class="terminal-dot terminal-dot-red"></span>
+    <span class="terminal-dot terminal-dot-yellow"></span>
+    <span class="terminal-dot terminal-dot-green"></span>
+    <span class="terminal-header-label">{{ .Site.Params.author.name | default "alex" | lower }}@tty1</span>
+  </div>
 
-<div class='blog-title'>
-    <span class="blog-title-special-user">dinnouti</span>@<a href="/" class='no-underline blog-title-special-host'>{{ .Site.Title }}
-    <span class="blog-title-special-path">~</span></a><span class="blog-title-special-path">/{{if ne .Site.Title .Title}}{{ replace .Title " " "_"}}{{ end }}</span>
-    <span class='blog-title-special-chars'>(master)&gt;&nbsp;</span>
-    <span class='blink'>&#x258C;</span> 
-</div>
-
+  <div class="terminal-prompt-line">
+    <a href="{{ .Site.Home.RelPermalink }}" class="no-underline blog-title-special-host">
+      <span class="blog-title-special-user">{{ .Site.Params.author.name | default "guest" | lower | anchorize }}</span><span class="blog-title-special-at">@</span><span class="blog-title-special-host-text">{{ .Site.Title }}</span>
+    </a><span class="blog-title-special-path">:~{{ if ne .Site.Home.RelPermalink .RelPermalink }}{{ .RelPermalink }}{{ end }}</span><span class="blog-title-special-chars">$</span>
+    <span class="blog-title-command">{{ if .IsHome }}ls ./posts{{ else }}cat {{ .Title | urlize }}.md{{ end }}</span>
+    <span class="blink">&#x2588;</span>
+  </div>
+</header>
