@@ -5,6 +5,20 @@ theme = "dinnouti"
 pygmentsUseClasses=true
 enableRobotsTXT = true
 
+[outputs]
+  home = ["HTML", "RSS", "llms"]
+
+[mediaTypes]
+  [mediaTypes."text/plain"]
+    suffixes = ["txt"]
+
+[outputFormats]
+  [outputFormats.llms]
+    mediaType = "text/plain"
+    baseName = "llms"
+    isPlainText = true
+    notAlternative = true
+
 [params]
   [params.author]
     name = "Alex Dinnouti"

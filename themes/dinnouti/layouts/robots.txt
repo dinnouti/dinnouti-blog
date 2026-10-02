@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# AI agents and LLM crawlers are explicitly welcome -- this is a
+# personal technical blog, not gated content.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: {{ "sitemap.xml" | absURL }}
+
+# Agent-readable site index (https://llmstxt.org/)
+# See: {{ "llms.txt" | absURL }}
