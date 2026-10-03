@@ -1,14 +1,23 @@
-<article class="post-card">
+<article class="post-card recipe-card">
   <h2 class="post-card-title">
     <a class="no-underline" href="{{ .Permalink }}">{{ .Title }}</a>
   </h2>
 
   <div class="summary-tags">
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+    {{ if eq .Type "recipes" }}<span class="recipe-badge">recipe</span>{{ end }}
     {{ range .Params.tags }}
     <a class="no-underline" href="{{ ($.Site.GetPage (printf "/tags/%s" (. | urlize))).RelPermalink }}">#{{ lower . }}</a>
     {{ end }}
   </div>
+
+  {{ if eq .Type "recipes" }}
+  <div class="recipe-card-meta">
+    {{ if .Params.total_time }}<span>&#8987; {{ .Params.total_time }}</span>{{ end }}
+    {{ if .Params.servings }}<span>&#127860; {{ .Params.servings }}</span>{{ end }}
+    {{ if .Params.difficulty }}<span>{{ .Params.difficulty }}</span>{{ end }}
+  </div>
+  {{ end }}
 
   {{ if .Params.description }}
   <p class="post-card-excerpt">{{ .Params.description }}</p>

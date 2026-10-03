@@ -1,0 +1,115 @@
+{{ define "main" }}
+<main>
+  <nav class="post-breadcrumb">
+    <a class="no-underline" href="{{ .Site.Home.RelPermalink }}">&larr; cd ..</a>
+    <span class="post-breadcrumb-sep">/</span>
+    <a class="no-underline" href="{{ (.Site.GetPage "/recipes").RelPermalink }}">recipes</a>
+  </nav>
+
+  <article class="recipe">
+    <h1>{{ .Title }}</h1>
+
+    <div class="summary-tags">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      {{ range .Params.tags }}
+      <a class="no-underline" href="{{ ($.Site.GetPage (printf "/tags/%s" (. | urlize))).RelPermalink }}">#{{ lower . }}</a>
+      {{ end }}
+    </div>
+
+    {{ if .Params.description }}
+    <p class="recipe-description">{{ .Params.description }}</p>
+    {{ end }}
+
+    <div class="recipe-stats" role="group" aria-label="Recipe stats">
+      {{ if .Params.prep_time }}<div class="recipe-stat"><span class="recipe-stat-key">PREP_TIME</span><span class="recipe-stat-val">{{ .Params.prep_time }}</span></div>{{ end }}
+      {{ if .Params.cook_time }}<div class="recipe-stat"><span class="recipe-stat-key">COOK_TIME</span><span class="recipe-stat-val">{{ .Params.cook_time }}</span></div>{{ end }}
+      {{ if .Params.total_time }}<div class="recipe-stat"><span class="recipe-stat-key">TOTAL_TIME</span><span class="recipe-stat-val">{{ .Params.total_time }}</span></div>{{ end }}
+      {{ if .Params.servings }}<div class="recipe-stat"><span class="recipe-stat-key">SERVINGS</span><span class="recipe-stat-val">{{ .Params.servings }}</span></div>{{ end }}
+      {{ if .Params.difficulty }}<div class="recipe-stat"><span class="recipe-stat-key">DIFFICULTY</span><span class="recipe-stat-val">{{ .Params.difficulty }}</span></div>{{ end }}
+    </div>
+
+    <div class="recipe-body-grid">
+      {{ if .Params.ingredients }}
+      <div class="recipe-ingredients" data-recipe-id="{{ .RelPermalink }}">
+        <h2 class="recipe-section-heading">// ingredients</h2>
+        <ul class="recipe-ingredient-list">
+          {{ range $i, $ing := .Params.ingredients }}
+          <li class="recipe-ingredient">
+            <label class="recipe-check">
+              <input type="checkbox" class="recipe-check-input" data-ing-idx="{{ $i }}" />
+              <span class="recipe-check-box" aria-hidden="true"></span>
+              <span class="recipe-check-label">{{ $ing }}</span>
+            </label>
+          </li>
+          {{ end }}
+        </ul>
+        <button type="button" class="recipe-reset-btn" aria-label="Reset checked ingredients">$ reset --ingredients</button>
+      </div>
+      {{ end }}
+
+      <div class="recipe-instructions">
+        <h2 class="recipe-section-heading">// instructions</h2>
+        <div class="post-body recipe-steps">
+          {{ .Content }}
+        </div>
+      </div>
+    </div>
+  </article>
+
+  {{ $pages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections }}
+  {{ $pages = $pages.ByDate.Reverse }}
+  {{ $index := -1 }}
+  {{ range $i, $p := $pages }}{{ if eq $p.Permalink $.Permalink }}{{ $index = $i }}{{ end }}{{ end }}
+  {{ if ge $index 0 }}
+  <nav class="post-pager" aria-label="Post navigation">
+    {{ if gt $index 0 }}
+    {{ $newer := index $pages (sub $index 1) }}
+    <a class="no-underline post-pager-link post-pager-next" href="{{ $newer.RelPermalink }}">
+      <span class="post-pager-label">newer &rarr;</span>
+      <span class="post-pager-title">{{ $newer.Title }}</span>
+    </a>
+    {{ else }}
+    <span></span>
+    {{ end }}
+
+    {{ if lt (add $index 1) (len $pages) }}
+    {{ $older := index $pages (add $index 1) }}
+    <a class="no-underline post-pager-link post-pager-prev" href="{{ $older.RelPermalink }}">
+      <span class="post-pager-label">&larr; older</span>
+      <span class="post-pager-title">{{ $older.Title }}</span>
+    </a>
+    {{ end }}
+  </nav>
+  {{ end }}
+
+  <script>
+  (function () {
+    var root = document.querySelector('.recipe-ingredients');
+    if (!root) return;
+    var key = 'recipe-checked:' + (root.getAttribute('data-recipe-id') || location.pathname);
+    var boxes = root.querySelectorAll('.recipe-check-input');
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+
+    function save() {
+      var state = {};
+      boxes.forEach(function (b) { state[b.dataset.ingIdx] = b.checked; });
+      try { localStorage.setItem(key, JSON.stringify(state)); } catch (e) {}
+    }
+
+    boxes.forEach(function (b) {
+      if (saved[b.dataset.ingIdx]) b.checked = true;
+      b.addEventListener('change', save);
+    });
+
+    var resetBtn = root.querySelector('.recipe-reset-btn');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function () {
+        boxes.forEach(function (b) { b.checked = false; });
+        try { localStorage.removeItem(key); } catch (e) {}
+      });
+    }
+  })();
+  </script>
+</main>
+{{ end }}

@@ -13,4 +13,10 @@
     <span class="blog-title-command">{{ if .IsHome }}ls ./posts{{ else }}cat {{ .Title | urlize }}.md{{ end }}</span>
     <span class="blink">&#x2588;</span>
   </div>
+
+  <nav class="terminal-nav" aria-label="Primary">
+    <a class="no-underline terminal-nav-link{{ if .IsHome }} is-active{{ end }}" href="{{ .Site.Home.RelPermalink }}">./home</a>
+    <a class="no-underline terminal-nav-link{{ if eq .Section "posts" }} is-active{{ end }}" href="{{ (.Site.GetPage "/posts").RelPermalink }}">./tech</a>
+    <a class="no-underline terminal-nav-link{{ if eq .Section "recipes" }} is-active{{ end }}" href="{{ (.Site.GetPage "/recipes").RelPermalink }}">./recipes</a>
+  </nav>
 </header>

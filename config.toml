@@ -36,6 +36,7 @@ enableRobotsTXT = true
     notAlternative = true
 
 [params]
+  mainSections = ["posts", "recipes"]
   [params.author]
     name = "Alex Dinnouti"
 
