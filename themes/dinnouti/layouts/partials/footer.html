@@ -3,10 +3,12 @@
   <div class="foot-wrapper">
     <div class="flex-footer-container">
       <div class="flex-footer-about">
-        <span class="footer-prompt">$ whoami</span><br/>
-        {{ .Site.Params.author.name | default .Site.Title }}<br/>
-        &mdash; <a href="{{ .Site.Home.RelPermalink }}">home</a>
-        &mdash; <a href="{{ (.Site.GetPage "/about").RelPermalink }}">about</a>
+        <span class="footer-prompt">$ whoami<span class="blink">_</span></span><br/>
+        <span class="footer-name">{{ .Site.Params.author.name | default .Site.Title }}</span><br/>
+        <span class="flex-footer-nav">
+          <a href="{{ .Site.Home.RelPermalink }}">home</a>
+          &mdash; <a href="{{ (.Site.GetPage "/about").RelPermalink }}">about</a>
+        </span>
       </div>
       <div class="flex-footer-social-icons">
         <a class="no-underline" href="https://www.linkedin.com/in/dinnouti/" target="_blank" rel="noopener" aria-label="LinkedIn">
