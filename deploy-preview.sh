@@ -8,6 +8,7 @@ DEPLOY_DIR="/var/www/dinnouti-blog-preview"
 PREVIEW_BASEURL="https://he.ls1.dinnouti.com/blog/"
 
 cd "$REPO_DIR"
-hugo --minify --baseURL "$PREVIEW_BASEURL" --cleanDestinationDir
+# -D: preview includes drafts. Production (GitHub Actions) builds WITHOUT -D.
+hugo --minify --baseURL "$PREVIEW_BASEURL" --cleanDestinationDir -D
 rsync -a --delete public/ "$DEPLOY_DIR/"
 echo "Deployed to $DEPLOY_DIR -> $PREVIEW_BASEURL"
