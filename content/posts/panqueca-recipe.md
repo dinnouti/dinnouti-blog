@@ -1,7 +1,7 @@
 ---
 title: "Perfect Pancake Recipe"
 date: 2026-10-06T16:30:24-04:00
-draft: true
+draft: false
 tags: ["recipe", "breakfast", "American"]
 description: "A classic American pancake recipe that's light, fluffy, and perfect for weekend brunch."
 comments: false
