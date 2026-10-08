@@ -3,7 +3,7 @@
 # No sudo required: /var/www/dinnouti-blog-preview is owned by ubuntu.
 set -euo pipefail
 
-REPO_DIR="/home/ubuntu/.hermes/cache/scratch/dinnouti-blog"
+REPO_DIR="/home/ubuntu/dinnouti-blog"
 DEPLOY_DIR="/var/www/dinnouti-blog-preview"
 PREVIEW_BASEURL="https://he.ls1.dinnouti.com/blog/"
 
