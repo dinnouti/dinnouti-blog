@@ -4,7 +4,7 @@ date: 2026-10-24T20:57:31-04:00
 tags: ["Hermes Agent", "Karakeep", "CLI", "self-hosted"]
 description: "What the Karakeep skill gives Hermes Agent: bookmarks, tags, lists and search through the CLI or MCP."
 comments: false
-draft: true
+draft: false
 ---
 
 Hermes Agent now has a Karakeep skill. It lets the agent manage bookmarks, tags and lists in a Karakeep instance, either through the official CLI or through MCP.
