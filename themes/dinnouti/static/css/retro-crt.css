@@ -2,18 +2,24 @@
    Retro Terminal (80s Phosphor CRT) — full theme, built from scratch
    ====================================================================== */
 
-:root {
-  --phosphor: #33ff33;
-  --phosphor-bright: #7dff7d;
-  --phosphor-dim: #1b8f1b;
-  --phosphor-dimmer: #0f5c0f;
-  --crt-bg: #050d05;
-  --crt-bg-panel: #0a1a0a;
-  --crt-bg-panel-2: #0d220d;
-  --crt-border: #1f5c1f;
-  --crt-border-bright: #33ff33;
-  --crt-white: #e8ffe8;
-  --crt-shadow: 0 0 2px rgba(51, 255, 51, 0.8), 0 0 6px rgba(51, 255, 51, 0.4);
+:where(:root) {
+  /* Base colors (--p-fg, --p-bg, --p-hi, --p-glow, --p-scan, --p-vig) come from
+     data/phosphors.yaml via partials/phosphor-head.html. Everything below is derived,
+     so a palette only needs fg + bg. Per-palette overrides win (higher specificity). */
+  --phosphor: var(--p-fg);
+  --phosphor-bright: color-mix(in srgb, var(--p-fg) 70%, var(--p-hi));
+  --phosphor-dim: color-mix(in srgb, var(--p-fg) var(--p-dim), var(--p-bg));
+  --phosphor-dimmer: color-mix(in srgb, var(--p-fg) 30%, var(--p-bg));
+  --crt-bg: var(--p-bg);
+  --crt-bg-panel: color-mix(in srgb, var(--p-fg) 7%, var(--p-bg));
+  --crt-bg-panel-2: color-mix(in srgb, var(--p-fg) 12%, var(--p-bg));
+  --crt-border: color-mix(in srgb, var(--p-fg) 35%, var(--p-bg));
+  --crt-border-bright: var(--p-fg);
+  --crt-white: color-mix(in srgb, var(--p-fg) 10%, var(--p-hi));
+  --crt-shadow: 0 0 2px color-mix(in srgb, var(--p-fg) var(--p-glow), transparent),
+                0 0 6px color-mix(in srgb, var(--p-fg) calc(var(--p-glow) / 2), transparent);
+  --crt-hl: color-mix(in srgb, var(--p-fg) 14%, transparent);
+  --p-dim: 55%; --p-fg: #33ff33; --p-bg: #050d05; --p-hi: #fff; --p-glow: 80%; --p-scan: 0.15; --p-vig: 0.55; --crt-err: #ff5555;
 }
 
 * {
@@ -75,8 +81,8 @@ body::before {
     to bottom,
     rgba(0, 0, 0, 0) 0px,
     rgba(0, 0, 0, 0) 1px,
-    rgba(0, 0, 0, 0.15) 2px,
-    rgba(0, 0, 0, 0.15) 3px
+    rgba(0, 0, 0, var(--p-scan)) 2px,
+    rgba(0, 0, 0, var(--p-scan)) 3px
   );
   mix-blend-mode: multiply;
 }
@@ -88,7 +94,15 @@ body::after {
   top: 0; left: 0;
   width: 100%; height: 100%;
   z-index: 9998;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,0.55) 100%);
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,var(--p-vig)) 100%);
+}
+
+/* phones: push the fade outward and cap its strength so the page doesn't read as a spotlight.
+   Scanlines (body::before) are intentionally untouched. */
+@media only screen and (max-width: 600px) {
+  body::after {
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 80%, rgba(0,0,0,min(var(--p-vig), 0.15)) 100%);
+  }
 }
 
 @keyframes crt-flicker {
@@ -777,7 +791,7 @@ li > code {
 }
 
 .chroma .c, .chroma .c1, .chroma .cm, .chroma .cs, .chroma .cp, .chroma .cpf {
-  color: var(--phosphor-dim);
+  color: var(--crt-comment, var(--phosphor-dim));
   font-style: italic;
 }
 
@@ -791,11 +805,11 @@ li > code {
 
 .chroma .o, .chroma .ow { color: var(--phosphor-bright); }
 
-.chroma .err { color: #ff5555; background-color: transparent; }
+.chroma .err { color: var(--crt-err); background-color: transparent; }
 
 .chroma .lnt, .chroma .ln { color: var(--phosphor-dim); }
 
-.chroma .hl { background-color: rgba(51, 255, 51, 0.12); }
+.chroma .hl { background-color: var(--crt-hl); }
 
 /* ---------------- responsive ---------------- */
 
@@ -828,4 +842,69 @@ li > code {
   }
 
   body { font-size: 16px; }
+}
+
+/* ---------------- phosphor switcher ---------------- */
+.phosphor-switch {
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8em;
+}
+.phosphor-switch-label { color: var(--phosphor-dim); margin-right: 4px; }
+.phosphor-switch-label .lbl-mob { display: none; }
+.phosphor-select-wrap { display: contents; }
+.phosphor-chip {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--crt-border);
+  display: inline-block;
+  vertical-align: middle;
+}
+::view-transition-group(root) { animation-duration: 0.15s; }
+.phosphor-select {
+  font: inherit;
+  color: var(--phosphor-dim); /* same dim tone as the "screen:" / "$ screen --set" label */
+  text-shadow: var(--crt-shadow); /* same glow as the label (iOS renders it on native selects) */
+  background-color: var(--crt-bg-panel);
+  border: 1px solid var(--crt-border);
+  border-radius: 0;
+  padding: 2px 22px 2px 6px;
+  cursor: pointer;
+  max-width: 100%;
+  /* iOS Safari/Chrome otherwise draw a rounded native pill with a black arrow */
+  -webkit-appearance: none;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--phosphor-dim) 50%),
+    linear-gradient(135deg, var(--phosphor-dim) 50%, transparent 50%);
+  background-position: calc(100% - 12px) 55%, calc(100% - 7px) 55%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+.phosphor-select:hover { color: var(--phosphor-bright); border-color: var(--phosphor-dim); }
+.phosphor-select:focus-visible { outline: 2px solid var(--phosphor-bright); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { body { animation: none; } }
+
+/* phones, option A "terminal prompt": row 1 = dots + host; row 2 = "$ screen --set [chip C64 blue v]".
+   The chip moves inside the dropdown's left edge so nothing floats on its own. */
+@media only screen and (max-width: 600px) {
+  .terminal-header-bar { flex-wrap: wrap; row-gap: 6px; }
+  .terminal-header-label { white-space: nowrap; }
+  .phosphor-switch { margin-left: 0; flex: 1 1 100%; flex-wrap: nowrap; gap: 16px; }
+  .phosphor-switch-label { margin-right: 0; white-space: nowrap; }
+  .phosphor-switch-label .lbl-desk { display: none; }
+  .phosphor-switch-label .lbl-mob { display: inline; }
+  .phosphor-select-wrap { display: block; position: relative; flex: 1 1 auto; min-width: 0; }
+  .phosphor-select-wrap .phosphor-chip {
+    position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; pointer-events: none;
+  }
+  .phosphor-select {
+    width: 100%; padding: 8px 30px 8px 34px; border: 0; background-color: transparent;
+    font-size: inherit; /* matches the "$ screen --set" label (12.8px). Note: iOS Safari may zoom the page when a field under 16px is tapped */
+    background-position: calc(100% - 16px) 55%, calc(100% - 11px) 55%;
+  }
 }

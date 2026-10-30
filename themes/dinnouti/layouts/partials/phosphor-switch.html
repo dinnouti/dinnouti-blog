@@ -1,0 +1,34 @@
+{{- /* Screen-style dropdown, generated from data/phosphors.yaml (grouped by `group`) */ -}}
+<div class="phosphor-switch">
+  <label class="phosphor-switch-label" for="phosphor-select"><span class="lbl-desk">screen:</span><span class="lbl-mob">$ screen --set</span></label>
+  <span class="phosphor-select-wrap">
+  <span class="phosphor-chip" id="phosphor-chip" aria-hidden="true"></span>
+  <select id="phosphor-select" class="phosphor-select">
+    {{- $prev := "" -}}
+    {{- range site.Data.phosphors }}
+      {{- if ne .group $prev }}
+        {{- if $prev }}</optgroup>{{ end }}
+    <optgroup label="{{ .group }}">
+        {{- $prev = .group }}
+      {{- end }}
+      <option value="{{ .id }}">{{ .label }}</option>
+    {{- end }}
+    </optgroup>
+  </select>
+  </span>
+</div>
+<script>
+(function(){
+  var root=document.documentElement,sel=document.getElementById("phosphor-select"),chip=document.getElementById("phosphor-chip");
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function paintChip(){var cs=getComputedStyle(root);chip.style.background="linear-gradient(135deg,"+cs.getPropertyValue("--p-bg").trim()+" 50%,"+cs.getPropertyValue("--p-fg").trim()+" 50%)";}
+  function apply(id){root.setAttribute("data-phosphor",id);paintChip();}
+  sel.value=root.getAttribute("data-phosphor")||sel.options[0].value;
+  paintChip();
+  sel.addEventListener("change",function(){
+    var id=sel.value;
+    try{localStorage.setItem("phosphor",id);}catch(e){}
+    if(document.startViewTransition&&!reduce){document.startViewTransition(function(){apply(id);});}else{apply(id);}
+  });
+})();
+</script>

@@ -1,0 +1,16 @@
+{{- /* Generates palette CSS + restores saved choice before first paint. Source: data/phosphors.yaml */ -}}
+{{- $ps := site.Data.phosphors -}}
+{{- $ids := slice -}}{{- range $ps }}{{ $ids = $ids | append .id }}{{ end -}}
+<style id="phosphor-palettes">
+{{- range $i, $p := $ps }}
+{{ if eq $i 0 }}:root:not([data-phosphor]),{{ end }}:root[data-phosphor="{{ $p.id }}"]{color-scheme:{{ if $p.light }}light{{ else }}dark{{ end }};--p-dim:{{ $p.dim | default "55%" }};--p-fg:{{ $p.fg }};--p-bg:{{ $p.bg }};--p-hi:{{ if $p.light }}#000{{ else }}#fff{{ end }};--p-glow:{{ if $p.light }}0%{{ else }}80%{{ end }};--p-scan:{{ if $p.light }}0.05{{ else }}0.15{{ end }};--p-vig:{{ if isset $p "vignette" }}{{ $p.vignette }}{{ else if $p.light }}0.12{{ else }}0.55{{ end }};--crt-err:{{ if $p.light }}#b00020{{ else }}#ff5555{{ end }};{{ range $k, $v := $p.overrides }}{{ $k | safeCSS }}:{{ $v | safeCSS }};{{ end }}}
+{{- end }}
+{{- range $p := $ps }}{{ if $p.comment }}
+:root[data-phosphor="{{ $p.id }}"]{--crt-comment:{{ $p.comment }}}{{ end }}{{ if $p.link }}
+:root[data-phosphor="{{ $p.id }}"] a{color:{{ $p.link }}}
+:root[data-phosphor="{{ $p.id }}"] a:hover,:root[data-phosphor="{{ $p.id }}"] a:focus{color:var(--crt-white)}{{ end }}{{ if $p.underline_links }}
+:root[data-phosphor="{{ $p.id }}"] a{text-decoration:underline}{{ end }}{{ end }}
+</style>
+<script>
+(function(){try{var ok={{ $ids | jsonify }};var q=new URLSearchParams(location.search).get("screen");var s=ok.indexOf(q)>-1?q:localStorage.getItem("phosphor");if(q&&ok.indexOf(q)>-1)localStorage.setItem("phosphor",q);if(s&&ok.indexOf(s)>-1)document.documentElement.setAttribute("data-phosphor",s);}catch(e){}})();
+</script>

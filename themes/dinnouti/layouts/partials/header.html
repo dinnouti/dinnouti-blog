@@ -4,6 +4,7 @@
     <span class="terminal-dot terminal-dot-yellow"></span>
     <span class="terminal-dot terminal-dot-green"></span>
     <span class="terminal-header-label">{{ .Site.Params.author.name | default "alex" | lower }}@tty1</span>
+    {{ partial "phosphor-switch.html" . }}
   </div>
 
   <div class="terminal-prompt-line">

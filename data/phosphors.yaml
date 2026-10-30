@@ -1,0 +1,147 @@
+# Phosphor palettes for the CRT switcher.
+# Add a palette = add a block. Remove one = delete its block. CSS + switcher update together.
+# First entry is the default.
+#   group   : optgroup heading in the dropdown (order of first appearance)
+#   id      : url-safe key stored in localStorage
+#   label   : text on the switcher button
+#   note    : tooltip
+#   fg      : phosphor (text) color
+#   bg      : screen background
+#   underline_links : true to underline every link (for palettes where link color is low contrast)
+#   dim     : how much of fg survives in "dim" text (default 55%); raise for palettes with few tones
+#   link    : color for links only (default derived from fg); comment : color for code comments
+#   vignette: edge darkening 0-1 (default 0.55 dark palettes, 0.12 light ones); 0 turns it off
+#   light   : true for dark-on-light (paper) tubes: no glow, softer scanlines
+#   overrides (optional): raw CSS vars to hand-tune derived shades
+- id: green
+  group: Phosphors
+  label: P1 green
+  note: P1 phosphor (green, 525 nm) - oscilloscopes, monochrome monitors
+  fg: "#33ff33"
+  bg: "#050d05"
+  overrides:
+    --phosphor-bright: "#7dff7d"
+    --phosphor-dim: "#1b8f1b"
+    --phosphor-dimmer: "#0f5c0f"
+    --crt-bg-panel: "#0a1a0a"
+    --crt-bg-panel-2: "#0d220d"
+    --crt-border: "#1f5c1f"
+    --crt-white: "#e8ffe8"
+- id: amber
+  group: Phosphors
+  label: P3 amber
+  note: P3 phosphor (yellow, 602 nm) - amber monochrome monitors
+  fg: "#ffb000"
+  bg: "#0d0800"
+- id: lime
+  group: Phosphors
+  label: P43 yellow-green
+  note: P43 phosphor (yellow-green, 545 nm) - display tubes
+  fg: "#d4ff3a"
+  bg: "#080a00"
+- id: p31
+  group: Phosphors
+  label: P31 yellowish-green
+  note: P31 phosphor (yellowish-green) - oscilloscopes, monochrome monitors
+  fg: "#8cff3a"
+  bg: "#060d03"
+- id: white
+  group: Phosphors
+  label: P4 white
+  note: P4 phosphor (white) - black-and-white TV tubes and display tubes
+  fg: "#d8e6ff"
+  bg: "#06080c"
+- id: blue
+  group: Phosphors
+  label: P7 blue
+  note: P7 phosphor (blue flash, yellow afterglow) - radar PPI, early oscilloscopes
+  fg: "#66ccff"
+  bg: "#030a12"
+- id: c64
+  group: Home computers
+  label: C64 blue
+  note: Commodore 64 (1982) - Colodore model (Pepto) blue #2e2c9b and light blue #706deb, background shifted toward blue by eye (#2a3aa8) because the original reads purple on modern screens; links lightened to #b8c0ff because the original light blue is unreadable as link text (2.6:1); all other text white. Simulated palette, not a phosphor.
+  fg: "#ffffff"
+  bg: "#2a3aa8"
+  vignette: 0.25
+  underline_links: true
+  link: "#b8c0ff"
+- id: msx
+  group: Home computers
+  label: MSX
+  note: MSX (1983) default screen - white on blue, blue tuned by eye from the TMS9918 dark blue. Simulated palette, not a phosphor.
+  fg: "#ffffff"
+  bg: "#2b4be0"
+  vignette: 0.25
+
+- id: amiga
+  group: Home computers
+  label: Amiga Workbench
+  note: Amiga Workbench 1.x - white on blue. Simulated palette, not a phosphor.
+  fg: "#ffffff"
+  bg: "#0055aa"
+  vignette: 0.25
+  dim: "80%"
+- id: zx
+  group: Home computers
+  label: ZX Spectrum
+  note: ZX Spectrum - black on pale gray. Simulated palette, not a phosphor.
+  light: true
+  fg: "#000000"
+  bg: "#d7d7d7"
+- id: turbopascal
+  group: Home computers
+  label: Turbo Pascal blue
+  note: DOS IDE look (Turbo Pascal / Norton) - yellow on blue. Simulated palette, not a phosphor.
+  fg: "#ffff55"
+  bg: "#0000aa"
+  vignette: 0.25
+- id: dosgray
+  group: Home computers
+  label: DOS gray
+  note: Light gray on black, the DOS prompt. Simulated palette, not a phosphor.
+  fg: "#aaaaaa"
+  bg: "#000000"
+- id: next
+  group: Mac and NeXT
+  label: NeXT 4-gray
+  note: NeXT MegaPixel Display (1990) - monochrome, four gray levels. Simulated palette, not a phosphor.
+  light: true
+  fg: "#000000"
+  bg: "#aaaaaa"
+- id: macgray
+  group: Mac and NeXT
+  label: Mac platinum
+  note: Classic Mac OS gray look - simulated palette, not a phosphor.
+  light: true
+  fg: "#1a1a1a"
+  bg: "#dddddd"
+- id: paper
+  group: Mac and NeXT
+  label: paper white
+  note: Dark-on-light take on a white (P4-style) tube - simulated, not a measured phosphor
+  light: true
+  fg: "#10161c"
+  bg: "#e6ecee"
+- id: gameboy
+  group: Handhelds
+  label: Game Boy
+  note: Game Boy (1989) LCD greens - simulated palette, not a phosphor.
+  light: true
+  fg: "#0f380f"
+  bg: "#9bbc0f"
+  dim: "80%"
+- id: nokia
+  group: Handhelds
+  label: Nokia 3310
+  note: Nokia 3310 (2000) LCD - simulated palette, not a phosphor.
+  light: true
+  fg: "#43523d"
+  bg: "#c7f0d8"
+  dim: "80%"
+- id: teletext
+  group: Broadcast
+  label: Teletext cyan
+  note: Teletext/Ceefax-style cyan on black. Simulated palette, not a phosphor.
+  fg: "#55ffff"
+  bg: "#000000"
