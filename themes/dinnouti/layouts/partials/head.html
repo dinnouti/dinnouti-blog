@@ -112,7 +112,9 @@
   />
 
   {{ partial "phosphor-head.html" . }}
-  <link rel="stylesheet" href="{{ "css/retro-crt.css" | relURL }}" />
+  {{- /* fingerprinted so a CSS change gets a new URL and visitors never see a cached old copy */ -}}
+  {{ $crt := resources.Get "css/retro-crt.css" | fingerprint }}
+  <link rel="stylesheet" href="{{ $crt.RelPermalink }}" />
 
   <!-- mixpanel.com -->
   {{ partial "mixpanel.html" . }}
